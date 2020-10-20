@@ -1,0 +1,28 @@
+todos
+
+//homepage
+    //inserting smooth scroll
+    //removing frontpage when 'screen === sm' 
+
+//form
+    //grid
+    //the input [num of players, venue] === disabled if date && time == null
+    //disabling the once they clicked it
+
+//summary
+    //grid
+
+//booking table
+    //client info
+
+
+//employees table
+    //first name and last name
+    //employee status
+
+
+//registration
+    //fn and ln
+    //username
+    //pw
+    //employee status
