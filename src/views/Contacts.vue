@@ -67,22 +67,33 @@ export default {
             infos: {}
         }
     },
+    created() {
+        
+    },
     methods: {
+        // id() {
+        //     axios.get('http://localhost/murder_manila/public/api/booking')
+        //     .then((res) => {
+        //         this.game_id = res.;
+        //     });
+        // },
+
         submit() {
             this.infos.fname = this.firstname;
             this.infos.lname = this.lastname;
-            this.infos.mobile_number = this.number;
+            this.infos.mobile_number = Number(this.number);
             this.infos.email = this.email;
+            this.infos.game_id = 1;
             axios.post('http://localhost/murder_manila/public/api/SaveClient', this.infos)
             .then((res) => {
-                if(res.data.response) {
-                    // successful response proceed to route or something
-                }
-                else {
-                    // something went wrong sa pagpasa ng payload or backend
-                }
-            });
-        }
+                console.log(res)
+            })
+            this.firstname='';
+            this.lastname='';
+            this.number='';
+            this.email='';
+        },
+        
     }
 }
 </script>

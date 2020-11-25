@@ -28,12 +28,6 @@
           >
               Registration
           </v-btn>
-          |
-          <v-btn
-            text
-          >
-              Update
-          </v-btn>   
         </v-app-bar>
     </div>
 </template>

@@ -98,6 +98,7 @@
                         class="mr-3"
                         color="primary"
                         @click.once="book"
+                
                     >
                         Submit
                     </v-btn>
@@ -124,21 +125,23 @@ export default {
         return {
             closeOnClick: false,
             offset: true,
-            time: '',
-            date: '',
-            selectedTheme: '',
-            players: '',
-            venue: '',
             imgs: [
                 {src: 'murder4.png'},
                 {src: 'revenge.jpg'}
             ],
             themes: [
-                {
+              {
 
-                }
+              }
             ],
-            datatopass: {}
+            datatopass: 
+            {
+                time: '',
+                date: '',
+                selectedTheme: '',
+                players: '',
+                venue: '',
+            }
         }
     },
     computed: {
@@ -151,7 +154,7 @@ export default {
         getthemes(){
             axios.get('http://localhost/murder_manila/public/api/themes')
             .then((res) => {
-                this.themes = res.data.data;
+                console.log(res.data)
             });
         },
         book(){
@@ -161,20 +164,25 @@ export default {
             this.datatopass.maxpax = this.players;
             this.datatopass.venue = this.venue;
             this.datatopass.discount_id = 1;
+            this.datatopass.game_id = 1;
             axios.post('http://localhost/murder_manila/public/api/booking', this.datatopass)
             .then((res) => {
                 // console.log(res.data.response);
                 if(res.data.response){
-                    // successful response proceed to route or something
+                    console.log(res)
                 }else{
-                    // something went wrong sa pagpasa ng payload or backend
+                    console.log(res)
                 }
-            });
+            })
+            this.time='';
+            this.date='';
+            this.selectedTheme='';
+            this.players='';
+            this.venue='';
         }
     },
-    watch() {
     
-    }
+    
 }
 
 </script>
