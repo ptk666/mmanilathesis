@@ -1,0 +1,15 @@
+ex.
+
+maxpax = 30
+constplayer = 8,000
+maxpax - 8 = player (22)
+player * 500 = (11,000) + constplayer = totalAmount (19,000)
+totalAmount / 2 = downpayment (9,500)
+
+maxpax = 30
+constplayer = 8,000
+perHead = 500
+maxpax - 8 = player (22)
+player * 500 = (11,000) + constplayer = totalAmount (19,000)
+total amount(19,000)*0.12 =(20280) totalamountwithVAT
+totalAmountwithVAT / 2 = downpayment (10,140)

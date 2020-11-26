@@ -42,7 +42,7 @@
                                         class="mt-3"
                                         v-bind="attrs"
                                         v-on="on" 
-                                        @click="snackbar.show = true"
+                                        @click="snackbar.show = true; getVerificationCode()"
                                     >
                                         Send verification code
                                     </v-btn>
@@ -199,12 +199,12 @@ export default {
  
         }
     },
-    created() {
+    mounted() {
         this.getdata();
     },
     methods: {
         getdata() {
-            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/3`)
+            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/2`)
             .then((response) => {
                 this.fname = response.data.data[0].firstname
                 this.lname = response.data.data[0].lastname
@@ -218,19 +218,12 @@ export default {
                 this.refnum = response.data.data[0].referenceNumber
             });
         },
-        // verificationCode() {
-        //     axios.get(`http://localhost/murder_manila/public/api/bookingSummary/2`)
-        //     .then((response) => {
-        //       this.referenceNumber = response.data[0].referenceNumber
-        //     });
-
-        //     if((this.referenceNumber)) {
-        //         alert('Successful!');
-        //     }
-        //     else {
-        //         alert('Please try again')
-        //     }
-        // }
+        getVerificationCode() {
+            axios.get(`http://localhost/murder_manila/public/api/sendVerification`)
+            .then((response) => {
+                console.log(response.data)
+            });
+        },
         
     },
     computed: {
