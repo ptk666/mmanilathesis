@@ -84,6 +84,7 @@
                                             label="Verification Code"
                                             id="verification"
                                             class="pt-4"
+                                            v-model="referenceNumber"
                                         >
                                         </v-text-field>
                                     </v-card-title>
@@ -106,20 +107,20 @@
                                         >
                                             I Agree
                                         </v-btn>
-                                        <span v-if="referenceNumber = refnum">
+                                        <span v-if="referenceNumber == refnum">
                                             <v-snackbar
                                             v-model="verificationSnackbar.show"
-                                            :color="verificationSnackbar.color"
+                                            :color="verificationSnackbar.colorSuccess"
                                             >
-                                                {{ verificationSnackbar.text }}
+                                                {{ verificationSnackbar.textSuccess }}
                                             </v-snackbar>
                                         </span>
                                         <span v-else>
                                             <v-snackbar
                                             v-model="verificationSnackbar.show"
-                                            :color="verificationSnackbar.color1"
+                                            :color="verificationSnackbar.colorFail"
                                             >
-                                                {{ verificationSnackbar.text1 }}
+                                                {{ verificationSnackbar.textFail }}
                                             </v-snackbar>
 
                                         </span>
@@ -188,22 +189,22 @@ export default {
             },
             verificationSnackbar: {
                 show: false,
-                color: 'success',
-                color1: 'error',
-                text: 'Successful!',
-                text1: 'Try Again'
-            },
+                textSuccess: 'Successful!',
+                textFail: 'Please try again!',
+                colorSuccess: 'success',
+                colorFail: 'error'
+            }
 
             
  
         }
     },
-    mounted() {
+    created() {
         this.getdata();
     },
     methods: {
         getdata() {
-            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/`)
+            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/3`)
             .then((response) => {
                 this.fname = response.data.data[0].firstname
                 this.lname = response.data.data[0].lastname
@@ -220,7 +221,7 @@ export default {
         // verificationCode() {
         //     axios.get(`http://localhost/murder_manila/public/api/bookingSummary/2`)
         //     .then((response) => {
-        //       this.referenceNumber = response.data.data.[0].referenceNumber
+        //       this.referenceNumber = response.data[0].referenceNumber
         //     });
 
         //     if((this.referenceNumber)) {

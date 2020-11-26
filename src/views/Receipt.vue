@@ -138,7 +138,9 @@
                             </v-text-field>
                             <v-btn
                                 color="success"
-                                @click="alert"
+                                @click.once="sendEmail"
+                                large
+                                class="mb-3"
                             >
                                 send receipt in email
                             </v-btn>

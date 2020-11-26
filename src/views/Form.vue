@@ -154,7 +154,7 @@ export default {
         getthemes(){
             axios.get('http://localhost/murder_manila/public/api/themes')
             .then((res) => {
-                console.log(res.data)
+                this.themes = res.data.data
             });
         },
         book(){
