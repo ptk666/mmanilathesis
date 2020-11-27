@@ -42,7 +42,7 @@
                                         class="mt-3"
                                         v-bind="attrs"
                                         v-on="on" 
-                                        @click="snackbar.show = true; getVerificationCode()"
+                                        @click.once="snackbar.show = true; getVerificationCode()"
                                     >
                                         Send verification code
                                     </v-btn>
@@ -204,26 +204,28 @@ export default {
     },
     methods: {
         getdata() {
-            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/2`)
+            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/1`)
             .then((response) => {
-                this.fname = response.data.data[0].firstname
-                this.lname = response.data.data[0].lastname
-                this.contactNumber = response.data.data[0].mobileNumber
-                this.email = (response.data.data[0].email)
-                this.time = response.data.data[0].time
-                this.date = response.data.data[0].date 
-                this.theme = response.data.data[0].game 
-                this.maxpax = response.data.data[0].maxpax 
-                this.venue = response.data.data[0].venue
-                this.refnum = response.data.data[0].referenceNumber
+                const summaryData = response.data.data[0];
+
+                this.fname = summaryData.firstname
+                this.lname = summaryData.lastname
+                this.contactNumber = summaryData.mobileNumber
+                this.email = (summaryData.email)
+                this.time = summaryData.time
+                this.date = summaryData.date 
+                this.theme = summaryData.game 
+                this.maxpax = summaryData.maxpax 
+                this.venue = summaryData.venue
+                this.refnum = summaryData.referenceNumber
             });
         },
-        getVerificationCode() {
-            axios.get(`http://localhost/murder_manila/public/api/sendVerification`)
-            .then((response) => {
-                console.log(response.data)
-            });
-        },
+        // getVerificationCode() {
+        //     axios.get(`http://localhost/murder_manila/public/api/sendVerification`)
+        //     .then((response) => {
+        //         console.log(response.data)
+        //     });
+        // },
         
     },
     computed: {

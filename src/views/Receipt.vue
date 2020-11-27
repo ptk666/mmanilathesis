@@ -31,6 +31,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="fname"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -38,6 +39,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="lname"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -45,6 +47,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="contactNumber"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -52,6 +55,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="email"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -59,6 +63,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="time"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -66,6 +71,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="date"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -73,6 +79,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="theme"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -80,6 +87,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="maxpax"
                                 ></v-text-field>
                                 <v-text-field
                                     regular
@@ -87,6 +95,7 @@
                                     placeholder="Placeholder"
                                     readonly
                                     dense
+                                    v-model="venue"
                                 ></v-text-field>
                             </v-card-text>
                         </v-card>
@@ -108,6 +117,7 @@
                                     label="Reservation Fee"
                                     placeholder="Placeholder"
                                     readonly
+                                    v-model="downpayment"
                                 >
                                 </v-text-field>
                             </v-card-text>
@@ -139,7 +149,7 @@
                             <v-btn
                                 color="success"
                                 @click.once="sendEmail"
-                                large
+                                medium
                                 class="mb-3"
                             >
                                 send receipt in email
@@ -157,18 +167,57 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
-
+                fname: '',
+                lname: '',
+                contactNumber: '',
+                email: '',
+                time: '',
+                date: '',
+                theme: '',
+                venue: '',
+                maxpax: 0,
+                constPlayer: 8000,
+                perHead: 500,
+                vat: 0.12,
+                totalPlayers: 0,
+                totalAmount: 0,
+                totalVAT: 0,
+                totalAmountWithVAT: 0,
+                downpayment: 0        
         }
     },
     methods: {
-        alert() {
-            alert('Sent successful')
-        }
-    },
+        getSummaryData() {
+            axios.get('http://localhost/murder_manila/public/api/bookingSummary/1')
+            .then((res) => {
+                const summaryData = res.data.data[0];
 
+                this.fname = summaryData.firstname;
+                this.lname = summaryData.lastname;
+                this.contactNumber = summaryData.mobileNumber;
+                this.email = summaryData.email;
+                this.time = summaryData.time;
+                this.date = summaryData.date;
+                this.theme = summaryData.game;
+                this.maxpax = summaryData.maxpax;
+                this.venue = summaryData.venue;
+               
+               this.totalPlayers = this.maxpax - 8;
+               this.totalAmount = (this.totalPlayers * this.perHead) + this.constPlayer;
+               this.totalVAT = this.totalAmount * this.vat;
+               this.totalAmountWithVAT = (this.totalAmount + this.totalVAT);
+               this.downpayment = (this.totalAmountWithVAT / 2);
+            });
+            
+        },
+    },
+    mounted() {
+        this.getSummaryData();
+    },
 }
 </script>
 

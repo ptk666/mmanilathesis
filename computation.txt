@@ -11,5 +11,113 @@ constplayer = 8,000
 perHead = 500
 maxpax - 8 = player (22)
 player * 500 = (11,000) + constplayer = totalAmount (19,000)
-total amount(19,000)*0.12 =(20280) totalamountwithVAT
+totalAmount(19,000)*VAT(0.12) =(20280) totalamountwithVAT
 totalAmountwithVAT / 2 = downpayment (10,140)
+
+            const maxPlayers = this.maxpax;
+            const playersFee = 8000;
+            const perHead = 500;
+            let players = null;
+            let totalAmount = null;
+            let vat = null;
+            const downpayment = '';
+
+maxpax: 30,
+constPlayer: 8000,
+perHead: 500,
+vat: 0.12,
+totalPlayers = maxpax - 8; (22)
+totalAmount = (totalPlayers * perHead) + constPlayer; (19,000)
+VAT = (totalAmount * vat); (2,280)
+totalAmountWithVAT = (totalAmount + VAT); (21,280)
+downpayment = (totalAmountWithVAT / 2); (10,640)
+
+
+function totalAmount() {
+	var maxpax = 30;
+  var constPlayer = 8000;
+  var perHead = 500;
+  var totalPlayers = 0;
+  var totalAmount = 0;
+
+  
+  totalPlayers = maxpax - 8;
+  return totalAmount = (totalPlayers * perHead) + 		constPlayer;
+
+  
+}
+
+function getVat(n) {
+	var vat = 0.12;
+  var totalAmountVAT = 0;
+  var totalAmount = n;
+  
+  return totalAmountVAT = (totalAmount * vat);
+}
+
+function totalAmountWithVAT(a, b) {
+	var totalAmount = a;
+  var vat = b;
+  var totalAmountWithVAT = 0;
+  
+  return totalAmountWithVAT = (totalAmount + vat);
+}
+
+function downpayment(a) {
+var totalAmountWithVAT = a;
+
+return (totalAmountWithVAT / 2);
+}
+
+
+var totalAmount = totalAmount();
+var getVat = getVat(totalAmount);
+var totalAmountWithVAT = totalAmountWithVAT(totalAmount, getVat);
+var downpayment = downpayment(totalAmountWithVAT);
+
+console.log(downpayment)
+
+
+
+
+
+
+
+new Vue({
+el: '#app',
+data() {
+	return {
+  	maxpax: '',
+    constPlayer: 8000,
+    perHead: 500,
+    vat: 0.12,
+    totalPlayers: 0,
+    totalAmount: 0,
+    totalVAT: 0,
+    totalAmountWithVAT: 0,
+    downpayment: 0
+  }
+},
+methods: {
+	getData() {
+  	axios.get('https://jsonplaceholder.typicode.com/todos')
+    .then((res) => {
+    let maxplayer = res.data[21].id;
+    	this.maxpax = maxplayer;
+      
+      this.totalPlayers = this.maxpax - 8;
+      this.totalAmount = (this.totalPlayers * this.perHead) + this.constPlayer;
+      this.totalVAT = this.totalAmount * this.vat;
+      this.totalAmountWithVAT = (this.totalAmount + this.totalVAT);
+      this.downpayment = (this.totalAmountWithVAT / 2);
+      console.log(this.downpayment)
+    });
+  },
+  result() {
+  
+  }
+},
+mounted() {
+	this.getData();
+}
+});

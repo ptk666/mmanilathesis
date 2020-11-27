@@ -26,11 +26,13 @@
                         <v-card-text>                        
                             <v-text-field
                                 label="Username"
+                                v-model="user.username"
                             >
                             </v-text-field>
                             <v-text-field
                                 label="Password"
                                 type="password"
+                                v-model="user.password"
                             >
                             </v-text-field>                        
                                               
@@ -41,24 +43,54 @@
                     >
                             <v-btn
                                 color="primary"
-                                type="submit"
-                        >
+                                type="submit"  
+                                @click.once="login" 
+                            >
                             proceed
                             </v-btn>
                         </v-card-actions>
                     </v-form>  
                 </v-card>
-              </v-col>
+              </v-col>  
           </v-row>
       </v-container>
     </div>
 </template>
 
-<script>
 
+<script>
+import axios from 'axios'
 export default {
     components: {
         
+    },
+    data() {
+        return {
+            positions: [
+                {
+
+                }
+            ],
+            user: {
+                username: '',
+                password: ''
+            }
+        }
+    },
+    created() {
+        this.getPositions() 
+    },
+    methods: {
+        getPositions() {
+            axios.get('http://localhost/murder_manila/public/api/positions')
+            .then((response) => {
+                console.log(response.data.data)
+                this.positions = response.data.data
+            });
+        },
+        login() {
+            axios.get(' ')
+        }
     }
 }
 </script>
