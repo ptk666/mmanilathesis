@@ -148,7 +148,7 @@
                             </v-text-field>
                             <v-btn
                                 color="success"
-                                @click.once="sendEmail"
+                                @click.once="sendEmailBilling"
                                 medium
                                 class="mb-3"
                             >
@@ -171,6 +171,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
+            receiptDetails: {
                 fname: '',
                 lname: '',
                 contactNumber: '',
@@ -180,14 +181,16 @@ export default {
                 theme: '',
                 venue: '',
                 maxpax: 0,
-                constPlayer: 8000,
-                perHead: 500,
-                vat: 0.12,
-                totalPlayers: 0,
-                totalAmount: 0,
-                totalVAT: 0,
-                totalAmountWithVAT: 0,
-                downpayment: 0        
+                referenceNumber: '',
+            },  
+            constPlayer: 8000,
+            perHead: 500,
+            vat: 0.12,
+            totalPlayers: 0,
+            totalAmount: 0,
+            totalVAT: 0,
+            totalAmountWithVAT: 0,
+            downpayment: 0        
         }
     },
     methods: {
@@ -205,7 +208,8 @@ export default {
                 this.theme = summaryData.game;
                 this.maxpax = summaryData.maxpax;
                 this.venue = summaryData.venue;
-               
+                this.referenceNumber = summaryData.referenceNumber;
+
                this.totalPlayers = this.maxpax - 8;
                this.totalAmount = (this.totalPlayers * this.perHead) + this.constPlayer;
                this.totalVAT = this.totalAmount * this.vat;
@@ -214,6 +218,30 @@ export default {
             });
             
         },
+        sendEmailBilling() {
+            this.receiptDetails.fname = this.fname,
+            this.receiptDetails.lname = this.lname,
+            this.receiptDetails.referenceNumber = this.referenceNumber,
+            this.receiptDetails.theme = this.theme;
+            this.receiptDetails.date = this.date;
+            this.receiptDetails.time = this.time;
+            this.receiptDetails.maxpax = this.maxpax;
+            this.receiptDetails.venue = this.venue;
+            this.receiptDetails.amount = this.downpayment;
+            this.receiptDetails.email = this.email;
+            this.receiptDetails.contactNumber = this.contactNumber;
+            console.log(this.receiptDetails)         
+            axios.post('http://localhost/murder_manila/public/api/sendEmailBillling')
+            .then((res) => {
+                if(res.data.response) {
+                    console.log(res)
+                }
+                else {
+                    console.log(res)
+                }
+            
+            });
+        }
     },
     mounted() {
         this.getSummaryData();

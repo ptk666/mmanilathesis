@@ -121,3 +121,7 @@ mounted() {
 	this.getData();
 }
 });
+
+totalamount = 10,500
+vat         = 1,260
+totalamountwithvat = 11,760

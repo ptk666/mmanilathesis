@@ -107,7 +107,7 @@
                                         >
                                             I Agree
                                         </v-btn>
-                                        <span v-if="referenceNumber == refnum">
+                                        <span v-if="referenceNumber == vernum">
                                             <v-snackbar
                                             v-model="verificationSnackbar.show"
                                             :color="verificationSnackbar.colorSuccess"
@@ -181,7 +181,7 @@ export default {
             theme: '',
             maxpax: '',
             venue: '',
-            referenceNumber: null,
+            verificationNumber: null,
             snackbar: {
                 show: false,
                 text: 'We have sent you a verification code, please check your email.',
@@ -211,13 +211,18 @@ export default {
                 this.fname = summaryData.firstname
                 this.lname = summaryData.lastname
                 this.contactNumber = summaryData.mobileNumber
-                this.email = (summaryData.email)
+                this.email = summaryData.email
                 this.time = summaryData.time
                 this.date = summaryData.date 
                 this.theme = summaryData.game 
                 this.maxpax = summaryData.maxpax 
                 this.venue = summaryData.venue
-                this.refnum = summaryData.referenceNumber
+                this.vernum = summaryData.verification_number
+                
+                console.log(response.data.data)
+
+                
+        
             });
         },
         // getVerificationCode() {
