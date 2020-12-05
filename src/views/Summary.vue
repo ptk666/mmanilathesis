@@ -84,7 +84,7 @@
                                             label="Verification Code"
                                             id="verification"
                                             class="pt-4"
-                                            v-model="referenceNumber"
+                                            v-model="verificationNumber"
                                         >
                                         </v-text-field>
                                     </v-card-title>
@@ -107,7 +107,7 @@
                                         >
                                             I Agree
                                         </v-btn>
-                                        <span v-if="referenceNumber == vernum">
+                                        <span v-if="verificationNumber == vernum">
                                             <v-snackbar
                                             v-model="verificationSnackbar.show"
                                             :color="verificationSnackbar.colorSuccess"
@@ -217,7 +217,7 @@ export default {
                 this.theme = summaryData.game 
                 this.maxpax = summaryData.maxpax 
                 this.venue = summaryData.venue
-                this.vernum = summaryData.verification_number
+                this.vernum = summaryData.verificationNumber
                 
                 console.log(response.data.data)
 

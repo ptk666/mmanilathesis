@@ -215,13 +215,14 @@ export default {
                this.totalVAT = this.totalAmount * this.vat;
                this.totalAmountWithVAT = (this.totalAmount + this.totalVAT);
                this.downpayment = (this.totalAmountWithVAT / 2);
+
+               
             });
             
         },
         sendEmailBilling() {
             this.receiptDetails.fname = this.fname,
             this.receiptDetails.lname = this.lname,
-            this.receiptDetails.referenceNumber = this.referenceNumber,
             this.receiptDetails.theme = this.theme;
             this.receiptDetails.date = this.date;
             this.receiptDetails.time = this.time;
@@ -230,8 +231,9 @@ export default {
             this.receiptDetails.amount = this.downpayment;
             this.receiptDetails.email = this.email;
             this.receiptDetails.contactNumber = this.contactNumber;
+            this.receiptDetails.referenceNumber = this.referenceNumber;
             console.log(this.receiptDetails)         
-            axios.post('http://localhost/murder_manila/public/api/sendEmailBillling')
+            axios.post('http://localhost/murder_manila/public/api/sendEmailBillling', this.receiptDetails)
             .then((res) => {
                 if(res.data.response) {
                     console.log(res)
