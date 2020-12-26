@@ -204,7 +204,7 @@ export default {
     },
     methods: {
         getdata() {
-            axios.get(`http://localhost/murder_manila/public/api/bookingSummary/1`)
+            axios.get(`http://murder-manila/api/bookingSummary/1`)
             .then((response) => {
                 const summaryData = response.data.data[0];
 

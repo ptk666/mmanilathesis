@@ -22,7 +22,9 @@
                     width="300"
                     class="mt-5"
                 >
-                    <v-form>
+                    <v-form
+                        @submit.prevent="login"
+                    >
                         <v-card-text>                        
                             <v-text-field
                                 label="Username"
@@ -43,11 +45,33 @@
                     >
                             <v-btn
                                 color="primary"
-                                type="submit"  
-                                @click.once="login" 
+                                type="submit"        
+                                @click="snackbar.show = true"                          
                             >
                             proceed
                             </v-btn>
+                            <span
+                                v-if="responses == true"
+                                color="green"
+
+                            >
+                                <v-snackbar
+                                    v-model="snackbar.show"
+                                    
+                                >
+                                    {{ snackbar.messages }}
+                                </v-snackbar>
+                            </span>
+                            <span
+                                v-else
+                            >
+                                <v-snackbar
+                                    v-model="snackbar.show"
+                                    color="error"
+                                >
+                                    {{ snackbar.messages }}
+                                </v-snackbar>
+                            </span>
                         </v-card-actions>
                     </v-form>  
                 </v-card>
@@ -74,22 +98,53 @@ export default {
             user: {
                 username: '',
                 password: ''
-            }
+            },
+            snackbar: {
+                show: false,
+                timeout: 10000,
+                colorSuccess: 'success',
+                colorError: 'error',
+                messages: '',
+                responses: ''
+            },
         }
     },
     created() {
-        this.getPositions() 
+        
     },
     methods: {
-        getPositions() {
-            axios.get('http://localhost/murder_manila/public/api/positions')
-            .then((response) => {
-                console.log(response.data.data)
-                this.positions = response.data.data
-            });
-        },
         login() {
-            axios.get(' ')
+             axios.post(`http://murder-manila/api/logIn`, this.user)
+            .then(res => {
+                const loginData = res.data;
+                this.snackbar.messages = loginData.message;
+                this.snackbar.responses = loginData.response;
+                console.log(loginData)
+
+                if(loginData.token) {
+                    sessionStorage.setItem(
+                        'access_token',
+                        loginData.token
+                    )
+                    this.$router.push('/owner')
+                }
+            })
+            .catch(res => {
+                console.log(res.data.message);
+            })
+
+
+        }
+    },
+    mounted() {
+        
+    },
+    watch: {
+        isSuccess(snackbar) {
+            this.snackbar = this.snackbar.responses
+            if(snackbar) {
+                this.$router.push('/owner')
+            }
         }
     }
 }

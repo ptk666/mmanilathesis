@@ -26,3 +26,50 @@ todos
     //username
     //pw
     //employee status
+
+
+
+    <v-app-bar
+            
+        >
+          <v-app-bar-title
+            id="title"
+          >        
+              DASHBOARD
+          </v-app-bar-title>
+          <v-spacer></v-spacer>
+          <span
+            id="btns"
+          >
+            <v-btn
+            text
+            router-link to="/owner"
+            
+          >
+              Bookings
+          </v-btn>
+          |
+          <v-btn
+            text
+          >
+              Sales Report
+          </v-btn>
+          |
+          <v-btn
+            text
+            router-link to="/registration"
+          >
+              Registration
+          </v-btn>
+          <v-divider
+            vertical
+            color="red"
+          ></v-divider>
+          <v-btn
+            text
+            router-link to="/login"
+          >
+            Log Out
+          </v-btn>
+          </span>      
+        </v-app-bar>

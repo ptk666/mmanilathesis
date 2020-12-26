@@ -31,7 +31,18 @@ export default {
         EmployeesTable,
         NavbarAdmin,
         BookValidationTable
-    }
+    },
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+
+    },
+    created() {
+
+    },
 }
 </script>
     

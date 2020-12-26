@@ -25,7 +25,9 @@
                     cols="6"
                     align="center"
                 >
-                <v-form>
+                <v-form
+                    ref=""
+                >
                     <div class="time">                 
                         <v-menu
                             top
@@ -179,6 +181,8 @@ export default {
             this.selectedTheme='';
             this.players='';
             this.venue='';
+
+            this.$router.push('/form/contacts')
         }
     },
     

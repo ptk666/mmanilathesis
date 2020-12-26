@@ -92,6 +92,8 @@ export default {
             this.lastname='';
             this.number='';
             this.email='';
+            
+            this.$router.push('/form/contacts/summary');
         },
         
     }

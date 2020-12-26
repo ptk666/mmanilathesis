@@ -2,7 +2,7 @@
     <div
         align="center"
     >
-        <v-card
+        <v-card 
             width="1000"
             class="mt-5"
         >
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -44,25 +45,21 @@ export default {
             ],
             data: [
                 {
-                    id: '0',
-                    referenceNumber: 123091854,
-                    bookDate: '10-20-2020',
-                    bookTime: '1:00PM',
-                    theme: 'Revenge at the Reunion',
-                    maxpax: 20,
-                    venue: 'Sta. Cruz'
-                },
-                {   
-                    id: '1',
-                    referenceNumber: 13452346,
-                    bookDate: '10-24-2020',
-                    bookTime: '3:00PM',
-                    theme: 'Murder at the Mansion',
-                    maxpax: 20,
-                    venue: 'Pangasinan'
+
                 }
             ]
         }
+    },
+    methods: {
+        datas() {
+            axios.get('http://murder-manila/api/Booked/')
+            .then(res => {
+                console.log(res)
+            });
+        }
+    },
+    mounted() {
+        this.datas();
     }
 }
 </script>

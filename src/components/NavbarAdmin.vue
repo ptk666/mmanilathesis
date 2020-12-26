@@ -1,34 +1,33 @@
 <template>
     <div>
-        <v-app-bar
-            
+      
+        <v-toolbar
+          color="white"
+          light
         >
-          <v-app-bar-title
-            id="title"
-          >        
-              DASHBOARD
-          </v-app-bar-title>
+          <v-toolbar-title>
+            DASHBOARD
+          </v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn
-            text
-            router-link to="/owner"
-          >
-              Bookings
-          </v-btn>
-          |
-          <v-btn
-            text
-          >
-              Sales Report
-          </v-btn>
-          |
-          <v-btn
-            text
-            router-link to="/registration"
-          >
-              Registration
-          </v-btn>
-        </v-app-bar>
+          <v-toolbar-items>
+            <v-btn
+              text
+            >
+              Bookings    
+            </v-btn>
+            <v-btn
+              text
+            >
+              Registration    
+            </v-btn>
+            <v-btn
+              depressed
+              color="error"
+            >
+              Log Out    
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
     </div>
 </template>
 
