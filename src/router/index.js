@@ -33,49 +33,53 @@ const routes = [
   },
   {
     path: '/form',
-    name: 'Form',
+    name: 'form',
     component: Form
   },
   {
     path: '/form/contacts',
-    name: 'Contacts',
+    name: 'contacts',
     component: Contacts
   },
   {
     path: '/form/contacts/summary',
-    name: 'Summary',
+    name: 'summary',
     component: Summary
   },
   {
     path: '/form/contacts/summary/receipt',
-    name: 'Receipt',
+    name: 'receipt',
     component: Receipt
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login
   },
   {
     path: '/eventManager',
-    name: 'EventManager',
+    name: 'eventManager',
     component: EventManager
   },
   {
     path: '/registration',
-    name: 'Registration',
+    name: 'registration',
     component: Registration
   },
   {
     path: '/owner',
-    name: 'Owner',
-    component: Owner
+    name: 'owner',
+    component: Owner,
+    meta: {
+      authenticate: true,
+      userType: 1
+    }
   },
   {
     path: '/operationSupervisor',
-    name: 'OperationSupervisor',
+    name: 'operation-supervisor',
     component: OperationSupervisor
-  }
+  },
 ]
 
 const router = new VueRouter({

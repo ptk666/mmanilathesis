@@ -23,6 +23,7 @@
             <v-btn
               depressed
               color="error"
+              @click="logout"
             >
               Log Out    
             </v-btn>
@@ -33,7 +34,16 @@
 
 <script>
 export default {
-    
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+      logout() {
+        this.$store.dispatch('logoutUser');
+      }    
+  }
 }
 </script>
 

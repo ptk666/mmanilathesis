@@ -1,0 +1,11 @@
+game_id from Form.vue should be auto_incremented
+
+
+
+
+
+I s-store muna ang data and retrieve all if nasa summary na 
+
+booking ahead of time less than a week is prohibited it should be 1 week before + selectedDate
+
+

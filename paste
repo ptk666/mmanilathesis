@@ -1,0 +1,385 @@
+<template>
+    <div
+        align="center"
+    >
+        <v-card 
+            width="1000"
+            class="mt-5"
+        >
+        <v-card-title>
+            Bookings
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+            <v-data-table
+            :headers="headers"
+            :items="data"
+            :items-per-page="5"
+        >
+        </v-data-table>
+        </v-card-text>
+        
+        </v-card>
+        
+    </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+    data() {
+        return {
+            headers: [
+                {
+                    text: 'ID',
+                    align: 'start',
+                    sortable: false,
+                    value: 'id'
+                },
+                {text: 'Reference Number', value: 'referenceNumber', sortable: false},
+                {text: 'Book Date', value: 'bookDate', sortable: true},
+                {text: 'Book Time', value: 'bookTime'},
+                {text: 'Theme', value: 'theme'},
+                {text: 'Persons', value:'maxpax'},
+                {text: 'Venue', value: 'venue'}
+            ],
+            data: [{ }]
+        }
+    },
+    methods: {
+        datas() {
+            axios.get('http://murder-manila/api/bookingSummary/1')
+            .then(res => {
+                const summaryData = res.data.data[0];
+
+                this.id = summaryData.id;
+                this.referenceNumber = summaryData.referenceNumber;
+                this.bookDate = summaryData.date;
+                this.bookTime = summaryData.time;
+
+                console.log(this.data)
+            });
+        }
+    },
+    mounted() {
+        this.datas();
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Owner.vue 
+<template>
+    <div id="app">
+        <NavbarAdmin
+            class="mb-5"
+         />
+        <BookingTable v-slot:default="slotProps">
+            <p>{{ slotProps.datas.bookDate }}</p> 
+        </BookingTable>
+         <v-divider
+            class="my-10"
+         ></v-divider>
+         <BookValidationTable />
+         <v-divider
+            class="my-10"
+         ></v-divider>
+        <EmployeesTable
+            class="mb-10"
+         />
+
+    </div>
+</template>
+
+<script>
+import BookingTable from '@/components/BookingTable.vue'
+import EmployeesTable from '@/components/EmployeesTable.vue'
+import NavbarAdmin from '@/components/NavbarAdmin.vue'
+import BookValidationTable from '@/components/BookValidationTable.vue'
+import axios from 'axios'
+export default {
+    components: {
+        BookingTable,
+        EmployeesTable,
+        NavbarAdmin,
+        BookValidationTable
+    },
+    data() {
+        return {
+            bookings: {
+                id: ''
+            }
+        }
+    },
+    methods: {
+        bookingsData() {
+            axios.get('http://murder-manila/api/bookingSummary/1')
+            .then(res => {
+                const datas = res.data.data[0]
+                this.$emit('dataBookings', datas);
+            })
+        }
+    },
+    mounted() {
+       this.bookingsData();
+    }   
+}
+</script>
+    
+<style scoped>
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BookingTable.vue 
+<template>
+  <div
+    align="center"
+  >
+    <v-card
+        width="1000"
+        class="mt-5"
+    >
+        <v-card-title>
+            Bookings
+        </v-card-title>
+            <v-data-table
+                :headers="headers"
+                :items="datas"
+                :loading="loading"
+                class="elevation-1"
+            >
+            </v-data-table> 
+    </v-card>
+    <div v-for="data in datas"
+         :key="data.id"
+    >
+        <slot :datas="data"></slot>
+    </div>
+ 
+      
+  </div>
+  
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+    data() {
+        return {
+            datas: [{
+                id:'',
+                referenceNumber: '',
+                bookDate: '',
+                bookTime: '',
+                theme: '',
+                maxpax: '',
+                venue: ''
+            }],
+            headers: [
+                {
+                    text: 'ID',
+                    align: 'start',
+                    sortable: true,
+                    value: 'id' 
+                },
+                {
+                    text: 'Reference Number',
+                    value: 'referenceNumber',
+                    sortable: false
+                },
+                {
+                    text: 'Book Date',
+                    value: 'bookDate',
+                    sortable: true
+                },
+                {
+                    text: 'Book Time',
+                    value: 'bookTime',
+                    sortable: false
+                },
+                {
+                    text: 'Theme',
+                    value: 'theme',
+                    sortable: false
+                },
+                {
+                    text: 'Persons',
+                    value: 'maxpax',
+                    sortable: false
+                },
+                {
+                    text: 'Venue',
+                    value: 'venue',
+                    sortable: false
+                }
+            ],
+            loading: false  
+        }   
+    },
+    
+    methods: {
+        getData() {
+            axios.get('http://murder-manila/api/bookingSummary/1')
+            .then(res => {
+                const datas = res.data.data[0]
+                this.$emit('dataBookings', datas);                 
+            });
+        }
+    }
+
+}
+</script>
+
+<style>
+
+</style>
+
+
+
+
+
+
+
+
+Debugged owner booking table:
+
+<template>
+  <div>
+      <NavbarAdmin />
+
+      <div align="center">
+        <v-card width="1000"
+            class="mt-5"
+        >
+            <v-card-title>
+                Bookings
+            </v-card-title>
+            <v-data-table :headers="headers"
+                :items="datas"
+                class="elevation-1"
+            >
+            </v-data-table>
+        </v-card>
+      </div>
+  </div>
+</template>
+
+<script>
+import NavbarAdmin from '@/components/NavbarAdmin.vue'
+import axios from 'axios'
+export default {
+    components: {
+        NavbarAdmin
+    },
+    data() {
+        return {
+            headers: [
+                {
+                    text: 'ID',
+                    align: 'start',
+                    sortable: true,
+                    value: 'id' 
+                },
+                {
+                    text: 'Reference Number',
+                    value: 'referenceNumber',
+                    sortable: false
+                },
+                {
+                    text: 'Book Date',
+                    value: 'bookDate',
+                    sortable: true
+                },
+                {
+                    text: 'Book Time',
+                    value: 'bookTime',
+                    sortable: false
+                },
+                {
+                    text: 'Theme',
+                    value: 'theme',
+                    sortable: false
+                },
+                {
+                    text: 'Persons',
+                    value: 'maxpax',
+                    sortable: false
+                },
+                {
+                    text: 'Venue',
+                    value: 'venue',
+                    sortable: false
+                }
+            ],
+            datas: [{
+                id: '',
+                referenceNumber: '',
+                bookDate: '',
+                bookTime: '',
+                theme: '',
+                maxpax: '',
+                venue: ''
+            }]
+        }
+    },
+    methods: {
+        getDatas() {
+            axios.get('http://murder-manila/api/bookingSummary/')
+            .then(res => {
+                
+                const foo = res.data.data[0];
+
+                this.datas[0].referenceNumber = foo.referenceNumber;
+                this.datas[0].bookDate = foo.date;
+                this.datas[0].bookTime = foo.time;
+                this.datas[0].theme = foo.game;
+                this.datas[0].maxpax = foo.maxpax;
+                this.datas[0].venue = foo.venue;
+
+                console.log(foo)
+                
+            })
+        }
+    },
+    created() {
+        this.getDatas();
+    },
+}
+</script>
+
+<style>
+
+</style>

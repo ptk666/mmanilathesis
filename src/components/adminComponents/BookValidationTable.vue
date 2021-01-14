@@ -4,6 +4,7 @@
     >
         <v-card
             width="1000"
+            class="elevation-3"
         >
             <v-card-title>
                 Booking Validation
@@ -12,9 +13,26 @@
                 <v-data-table
                     :headers="headers"
                     :items="items"
-                    :items-per-page="5"
                 >
+                <template
+        v-slot:item.actions="{ item }"
+      >
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small       
+          @click="deleteItem(item)"   
+        >
+          mdi-delete
+        </v-icon>
+      </template>
                 </v-data-table>
+                
             </v-card-text>
         </v-card>
     </div>
@@ -50,6 +68,11 @@ export default {
                     text: 'Time',
                     sortable: false,
                     value: 'time'
+                },
+                {
+                    text: 'Actions',
+                    value: 'actions',
+                    sortable: false
                 }
             ],
             items: [

@@ -1,51 +1,42 @@
 <template>
-    <div id="app">
-        <NavbarAdmin
-            class="mb-5"
-         />
-        <BookingTable
-
-         />
-         <v-divider
-            class="my-10"
-         ></v-divider>
-         <BookValidationTable />
-         <v-divider
-            class="my-10"
-         ></v-divider>
-        <EmployeesTable
-            class="mb-10"
-         />
-    </div>
+  <div>
+    <NavbarAdmin />
+    <BookingTable />
+    <v-divider
+      class="my-10"
+    ></v-divider>
+    <BookValidationTable />
+    <v-divider
+      class="my-10"
+    ></v-divider>
+    <EmployeesTable />
+  </div>
 </template>
 
 <script>
-import BookingTable from '@/components/BookingTable.vue'
-import EmployeesTable from '@/components/EmployeesTable.vue'
-import NavbarAdmin from '@/components/NavbarAdmin.vue'
-import BookValidationTable from '@/components/BookValidationTable.vue'
-
+import NavbarAdmin from '@/components/adminComponents/NavbarAdmin'
+import BookingTable from '@/components/adminComponents/BookingTable'
+import BookValidationTable from '@/components/adminComponents/BookValidationTable'
+import EmployeesTable from '@/components/adminComponents/EmployeesTable'
+import axios from 'axios'
 export default {
-    components: {
-        BookingTable,
-        EmployeesTable,
-        NavbarAdmin,
-        BookValidationTable
-    },
-    data() {
-        return {
+  components: {
+    NavbarAdmin,
+    BookingTable,
+    BookValidationTable,
+    EmployeesTable
+  },
+  data() {
+    return {
 
-        }
-    },
-    methods: {
-
-    },
-    created() {
-
-    },
+    }
+  },
+  created() {
+    axios.default.headers.common["Authorization"] = localStorage.getItem('token')
+  }
 }
 </script>
-    
-<style scoped>
+
+<style>
 
 </style>
