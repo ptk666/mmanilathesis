@@ -52,7 +52,7 @@ const actions = {
       commit(response)
   },
   async computation({ commit }) {
-    state.receiptComputations.totalPlayers = state.bookingDatas[0].persons - 8;
+    state.receiptComputations.totalPlayers = state.bookingDatas[0].maxpax - 8;
     state.receiptComputations.totalAmount = (state.receiptComputations.totalPlayers * state.receiptComputations.perHead) + state.receiptComputations.constPlayer;
     state.receiptComputations.totalVAT = state.receiptComputations.totalAmount * state.receiptComputations.vat;
     state.receiptComputations.totalAmountWithVAT = (state.receiptComputations.totalAmount + state.receiptComputations.totalVAT);

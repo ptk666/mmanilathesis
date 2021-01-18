@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'App',
 
@@ -18,7 +17,7 @@ export default {
     
   },
   computed: {
-    ...mapState(['snackbars'])
+
   },
   data: () => ({
     //

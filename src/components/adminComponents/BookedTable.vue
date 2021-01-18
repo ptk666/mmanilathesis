@@ -6,7 +6,7 @@
       width="1000"
     >
       <v-card-title>
-        <em>Cancelled Bookings</em>
+        <em>Successful Bookings</em>
       </v-card-title>
       <v-data-table
         :headers="headers"
@@ -76,7 +76,7 @@ export default {
       this.getBookings();
     },
     getBookings() {
-      axios.get('http://murder-manila/api/CancelledBookings')
+      axios.get('http://murder-manila/api/Booked')
         .then(res => {
           this.datas = res.data.data;
         })

@@ -24,8 +24,7 @@
           </div>
           <div
             class="subtitle font-weight-light white--text"
-          >
-            Lorem ipsum dolor sit amet.
+          >    
           </div>
           <v-btn
             class="mt-8"
@@ -43,7 +42,7 @@
         <v-row  justify="center" class="black--text">
             <v-col cols="12" align="center" class="black--text" >
               <div class="display-2 font-weight-bold pa-3 ma-3">ABOUT MURDER MANILA</div>
-              <div class="body-2 font-weight-light"><span id="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea voluptatem asperiores sapiente voluptates. Autem, eaque nihil rem possimus illum alias fuga a est inventore nulla excepturi obcaecati eum ipsam doloremque veniam deserunt laboriosam temporibus, fugit quaerat minus dolore similique nesciunt!</span></div>
+              <div class="body-2 font-weight-light"><span id="text">We offer a memorable and one-of-a-kind activity perfect for any private occasion. Experience a murder mystery where you and your guests will play the victim, suspects and murderer. We can customize the party for you! Groups of 8 to 60, or even more personal or corporate functions. Choose a venue of your choice, or we can suggest one for you.</span></div>
             </v-col>
         </v-row>
       </v-container>
@@ -86,14 +85,20 @@
             <v-card class="white--text" color="black">
               <v-img src="murder4.png"></v-img>
               <v-card-title class="subtitle-1 font-weight-bold">Murder at the Mansion</v-card-title>
-              <v-card-text class="subtitle-2 white--text font-weight-light"><span id="text">ipsum dolor sit amet consectetur adipisicing elit. Odit, deserunt!</span></v-card-text>
+              <v-card-text class="subtitle-2 white--text font-weight-light"><span id="text">It’s been 15 years since you’ve graduated from high school and it’s time to reunite and catch up with your former classmates to see how everyone is doing and what everyone has become.
+
+Unfortunately, the reunion will turn deadly as a killer is amongst you waiting to strike at his victim. Stay alert and use your detective skills to uncover the murderer before the end of the night.</span></v-card-text>
             </v-card>
           </v-col>
            <v-col cols="6">
             <v-card class="white--text" color="black">
               <v-img src="revenge.jpg"></v-img>
               <v-card-title class="subtitle-1 font-weight-bold">Revenge at the Reunion</v-card-title>
-              <v-card-text class="subtitle-2 white--text font-weight-light" ><span id="text">ipsum dolor sit amet consectetur adipisicing elit. Odit, deserunt!</span></v-card-text>
+              <v-card-text class="subtitle-2 white--text font-weight-light" ><span id="text">
+
+You do not know each other but you have all been invited to a mysterious dinner party by an unknown host in the famous Mystery Mansion. The night turns fatal as one of the guests is murdered shortly after dinner. What’s even more frightening is the realization that the killer is amongst you.
+
+Is it the mild-mannered doctor, the wise judge, the flirtatious maid, or the loyal butler? You must find out by the end of the night before the killer strikes again.</span></v-card-text>
             </v-card>
           </v-col>
         </v-row>

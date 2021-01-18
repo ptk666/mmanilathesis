@@ -44,9 +44,6 @@ export default {
                 side: false,
                 xs: 200,
                 links: [
-                    {buttons: 'Home', route: '/'},
-                    {buttons: 'About'},
-                    {buttons: 'Themes'},
                     {buttons: 'Book Now', route: '/form'}
                 ]
                }

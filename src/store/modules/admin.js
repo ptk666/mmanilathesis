@@ -3,7 +3,6 @@ import Swal from 'sweetalert2/src/sweetalert2.js'
 
 const state = {
   users: {},
-  test: 'test'
 };
 
 const getters = {
@@ -21,7 +20,7 @@ const actions = {
       if(res.data.response) {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('user_type', res.data.admin.position_id)
-        localStorage.setItem('user_info', res.data.admin.id)
+        localStorage.setItem('user_info', res.data.admin.username)
         Swal.fire({
           toast: true,
           position: 'top-end',
@@ -31,8 +30,17 @@ const actions = {
           icon: 'success',
           showConfirmButton: false    
         })
-        console.log(res.data)
-        // window.location.replace('/owner')
+        let currentUser = localStorage.getItem('user_type');
+        if(currentUser == 1) {
+          window.location.replace('/owner')
+        }
+        else if(currentUser == 2) {
+          window.location.replace('/eventManager')
+        }
+        else if(currentUser == 3) {
+          window.location.replace('/operationSupervisor')
+        }
+        
       }
       else {
         Swal.fire({
@@ -51,11 +59,12 @@ const actions = {
     localStorage.removeItem('token');
 
     window.location.replace('/login');
-  }
+  },
 };
 
 const mutations = {
-  LOGIN_USER: (state, users) => (state.users = users)
+  LOGIN_USER: (state, users) => (state.users = users),
+  SAVE_POSITIONS: (state, positions) => (state.positions = positions)
 };
 
 export default {

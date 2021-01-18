@@ -9,3 +9,25 @@ I s-store muna ang data and retrieve all if nasa summary na
 booking ahead of time less than a week is prohibited it should be 1 week before + selectedDate
 
 
+Year Month Date Hour Minutes Seconds
+
+
+
+
+
+
+
+
+
+public function generaterefnumber($date){
+   
+        $dataDate;
+        $dataTime;
+
+        $dateParts = explode(" ", $date);
+
+        $dataDate = str_replace("-", "", $dateParts[0]);
+        $dataTime = str_replace(":", "", $dateParts[1]);
+        
+
+        return $referencenumber = $dataDate.$dataTime;

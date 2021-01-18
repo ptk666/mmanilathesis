@@ -1,195 +1,49 @@
 <template>
-    <div
-        align="center"
-    >
-        <v-card 
-            width="1000"
-            class="mt-5"
-        >
-        <v-card-title>
-            Bookings
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-            <v-data-table
-            :headers="headers"
-            :items="data"
-            :items-per-page="5"
-        >
-        </v-data-table>
-        </v-card-text>
-        
-        </v-card>
-        
-    </div>
-</template>
-
-<script>
-import axios from 'axios'
-export default {
-    data() {
-        return {
-            headers: [
-                {
-                    text: 'ID',
-                    align: 'start',
-                    sortable: false,
-                    value: 'id'
-                },
-                {text: 'Reference Number', value: 'referenceNumber', sortable: false},
-                {text: 'Book Date', value: 'bookDate', sortable: true},
-                {text: 'Book Time', value: 'bookTime'},
-                {text: 'Theme', value: 'theme'},
-                {text: 'Persons', value:'maxpax'},
-                {text: 'Venue', value: 'venue'}
-            ],
-            data: [{ }]
-        }
-    },
-    methods: {
-        datas() {
-            axios.get('http://murder-manila/api/bookingSummary/1')
-            .then(res => {
-                const summaryData = res.data.data[0];
-
-                this.id = summaryData.id;
-                this.referenceNumber = summaryData.referenceNumber;
-                this.bookDate = summaryData.date;
-                this.bookTime = summaryData.time;
-
-                console.log(this.data)
-            });
-        }
-    },
-    mounted() {
-        this.datas();
-    }
-}
-</script>
-
-<style scoped>
-
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Owner.vue 
-<template>
-    <div id="app">
-        <NavbarAdmin
-            class="mb-5"
-         />
-        <BookingTable v-slot:default="slotProps">
-            <p>{{ slotProps.datas.bookDate }}</p> 
-        </BookingTable>
-         <v-divider
-            class="my-10"
-         ></v-divider>
-         <BookValidationTable />
-         <v-divider
-            class="my-10"
-         ></v-divider>
-        <EmployeesTable
-            class="mb-10"
-         />
-
-    </div>
-</template>
-
-<script>
-import BookingTable from '@/components/BookingTable.vue'
-import EmployeesTable from '@/components/EmployeesTable.vue'
-import NavbarAdmin from '@/components/NavbarAdmin.vue'
-import BookValidationTable from '@/components/BookValidationTable.vue'
-import axios from 'axios'
-export default {
-    components: {
-        BookingTable,
-        EmployeesTable,
-        NavbarAdmin,
-        BookValidationTable
-    },
-    data() {
-        return {
-            bookings: {
-                id: ''
-            }
-        }
-    },
-    methods: {
-        bookingsData() {
-            axios.get('http://murder-manila/api/bookingSummary/1')
-            .then(res => {
-                const datas = res.data.data[0]
-                this.$emit('dataBookings', datas);
-            })
-        }
-    },
-    mounted() {
-       this.bookingsData();
-    }   
-}
-</script>
-    
-<style scoped>
-
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-BookingTable.vue 
-<template>
   <div
     align="center"
   >
     <v-card
-        width="1000"
-        class="mt-5"
+      width="1000"
+      class="mt-5 elevation-3"
     >
-        <v-card-title>
-            Bookings
-        </v-card-title>
-            <v-data-table
-                :headers="headers"
-                :items="datas"
-                :loading="loading"
-                class="elevation-1"
-            >
-            </v-data-table> 
+      <v-card-title
+        class="text-uppercase"
+      >
+        <em>Pending Bookings</em>
+      </v-card-title>
+        <v-data-table
+        v-for="(data, i) in datas"
+        :key="i"
+        :headers="headers"
+        :items="data"
+        :loading="loading"
+        >
+        <!-- <template
+          #item.booked="{ item }"
+        >
+          <v-btn
+            small
+          >Booked</v-btn>
+        </template> -->
+        <!-- <template
+          #item.actions="{ item }"
+        >
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small       
+          @click="deleteItem(item)"   
+        >
+          mdi-delete
+        </v-icon>
+      </template> -->
+        </v-data-table>
     </v-card>
-    <div v-for="data in datas"
-         :key="data.id"
-    >
-        <slot :datas="data"></slot>
-    </div>
- 
-      
   </div>
   
 </template>
@@ -197,68 +51,101 @@ BookingTable.vue
 <script>
 import axios from 'axios'
 export default {
-    data() {
-        return {
-            datas: [{
-                id:'',
-                referenceNumber: '',
-                bookDate: '',
-                bookTime: '',
-                theme: '',
-                maxpax: '',
-                venue: ''
-            }],
-            headers: [
-                {
-                    text: 'ID',
-                    align: 'start',
-                    sortable: true,
-                    value: 'id' 
-                },
-                {
-                    text: 'Reference Number',
-                    value: 'referenceNumber',
-                    sortable: false
-                },
-                {
-                    text: 'Book Date',
-                    value: 'bookDate',
-                    sortable: true
-                },
-                {
-                    text: 'Book Time',
-                    value: 'bookTime',
-                    sortable: false
-                },
-                {
-                    text: 'Theme',
-                    value: 'theme',
-                    sortable: false
-                },
-                {
-                    text: 'Persons',
-                    value: 'maxpax',
-                    sortable: false
-                },
-                {
-                    text: 'Venue',
-                    value: 'venue',
-                    sortable: false
-                }
-            ],
-            loading: false  
-        }   
-    },
-    
-    methods: {
-        getData() {
-            axios.get('http://murder-manila/api/bookingSummary/1')
-            .then(res => {
-                const datas = res.data.data[0]
-                this.$emit('dataBookings', datas);                 
-            });
+  data() {
+    return {
+      headers: [
+        {
+          text: 'ID',
+          align: 'start',
+          sortable: true,
+          value: 'id' 
+        },
+        {
+          text: 'Reference Number',
+          value: 'Reference_Number',
+          sortable: false
+        },
+        {
+          text: 'Book Date',
+          value: 'date',
+          sortable: true
+        },
+        {
+          text: 'Book Time',
+          value: 'time',
+          sortable: false
+        },
+        {
+          text: 'Theme',
+          value: 'game',
+          sortable: false
+        },
+        {
+          text: 'Persons',
+          value: 'maxpax',
+          sortable: false
+        },
+        {
+          text: 'Venue',
+          value: 'venue',
+          sortable: false
+        },
+        {
+          text: 'Booked',
+          value: 'booked',
+          sortable: false
+        },
+        {
+          text: 'Actions',
+          value: 'actions',
+          sortable: false
         }
+      ],
+      datas: [{
+        id: '',
+        Reference_Number:'',
+        date: '',
+        time: '',
+        game: '',
+        maxpax: '',
+        venue: ''
+      }],
+      editedItem: {
+        date: '',
+        time: '',
+        game: '',
+        maxpax: '',
+        venue: ''
+      },
+      defaultItem: {
+        bookDate: '',
+        bookTime: '',
+        theme: '',
+        maxpax: '',
+        venue: ''
+      }
     }
+  },
+  methods: {
+    getDatas() {
+      axios.get('http://murder-manila/api/Pendings', {
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
+      })
+        .then(res => {
+            this.datas = res.data;
+        });
+    },
+  },
+  computed: {
+
+},
+  watch: {
+    
+  },
+  created() {
+    this.getDatas();
+    axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem('token');
+  }
 
 }
 </script>
@@ -274,112 +161,831 @@ export default {
 
 
 
-Debugged owner booking table:
+
+
+
+
+
+
+
+
+
+
+
 
 <template>
-  <div>
-      <NavbarAdmin />
-
-      <div align="center">
-        <v-card width="1000"
-            class="mt-5"
+  <div align="center">
+    <v-card width="1000" class="mt-5 elevation-3">
+      <v-card-title class="text-uppercase">
+        <em>Pending Bookings</em>
+      </v-card-title>
+      <v-data-table :headers="headers" :items="datas">
+        <v-dialog v-model="dialog" max-width="500px">
+          <template #activator="{ on, attrs }">
+            <v-btn color="primary" class="mb-2" v-bind="attrs" v-on="on">
+              Dummy
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title> Edit Item </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.date"
+                      label="Date"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.time"
+                      label="Time"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.game"
+                      label="Time"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.maxpax"
+                      label="# of Players"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.venue"
+                      label="Venue"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text> Cancel </v-btn>
+              <v-btn text> Save </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog
+          v-model="dialogDelete"
+          max-width="500px"
         >
+          <v-card>
             <v-card-title>
-                Bookings
+              Are you sure this reservation is cancelled?
             </v-card-title>
-            <v-data-table :headers="headers"
-                :items="datas"
-                class="elevation-1"
-            >
-            </v-data-table>
-        </v-card>
-      </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                text
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+              >
+                Yes
+              </v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <template
+          #item.actions
+        >
+          <v-icon
+            small
+            class="mr-2"
+          >
+            mdi-pencil
+          </v-icon>
+          <v-icon
+            small
+          >
+            mdi-delete
+          </v-icon>
+        </template>
+        <template
+          #no-data
+        >
+          <v-btn
+            color="primary"
+          >
+            Reset
+          </v-btn>
+        </template>
+      </v-data-table>
+    </v-card>
   </div>
 </template>
 
 <script>
-import NavbarAdmin from '@/components/NavbarAdmin.vue'
-import axios from 'axios'
+import axios from "axios";
 export default {
-    components: {
-        NavbarAdmin
+  data() {
+    return {
+      dialog: false,
+      dialogDelete: false,
+      headers: [
+        {
+          text: "ID",
+          align: "start",
+          sortable: true,
+          value: "id",
+        },
+        {
+          text: "Reference Number",
+          value: "Reference_Number",
+          sortable: false,
+        },
+        {
+          text: "Book Date",
+          value: "date",
+          sortable: true,
+        },
+        {
+          text: "Book Time",
+          value: "time",
+          sortable: false,
+        },
+        {
+          text: "Theme",
+          value: "game",
+          sortable: false,
+        },
+        {
+          text: "Persons",
+          value: "maxpax",
+          sortable: false,
+        },
+        {
+          text: "Venue",
+          value: "venue",
+          sortable: false,
+        },
+        {
+          text: "Booked",
+          value: "booked",
+          sortable: false,
+        },
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false,
+        },
+      ],
+      datas: [
+        {
+          id: "",
+          Reference_Number: "",
+          date: "",
+          time: "",
+          game: "",
+          maxpax: "",
+          venue: "",
+        },
+      ],
+      editedItem: {
+        date: "",
+        time: "",
+        game: "",
+        maxpax: "",
+        venue: "",
+      },
+    };
+  },
+  methods: {
+    initialize() {
+      axios
+        .get("http://murder-manila/api/Pendings", {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        })
+        .then((res) => {
+          this.datas = res.data.data;
+        });
     },
-    data() {
-        return {
-            headers: [
-                {
-                    text: 'ID',
-                    align: 'start',
-                    sortable: true,
-                    value: 'id' 
-                },
-                {
-                    text: 'Reference Number',
-                    value: 'referenceNumber',
-                    sortable: false
-                },
-                {
-                    text: 'Book Date',
-                    value: 'bookDate',
-                    sortable: true
-                },
-                {
-                    text: 'Book Time',
-                    value: 'bookTime',
-                    sortable: false
-                },
-                {
-                    text: 'Theme',
-                    value: 'theme',
-                    sortable: false
-                },
-                {
-                    text: 'Persons',
-                    value: 'maxpax',
-                    sortable: false
-                },
-                {
-                    text: 'Venue',
-                    value: 'venue',
-                    sortable: false
-                }
-            ],
-            datas: [{
-                id: '',
-                referenceNumber: '',
-                bookDate: '',
-                bookTime: '',
-                theme: '',
-                maxpax: '',
-                venue: ''
-            }]
-        }
-    },
-    methods: {
-        getDatas() {
-            axios.get('http://murder-manila/api/bookingSummary/')
-            .then(res => {
-                
-                const foo = res.data.data[0];
-
-                this.datas[0].referenceNumber = foo.referenceNumber;
-                this.datas[0].bookDate = foo.date;
-                this.datas[0].bookTime = foo.time;
-                this.datas[0].theme = foo.game;
-                this.datas[0].maxpax = foo.maxpax;
-                this.datas[0].venue = foo.venue;
-
-                console.log(foo)
-                
-            })
-        }
-    },
-    created() {
-        this.getDatas();
-    },
-}
+  },
+  created() {
+    this.initialize();
+  },
+};
 </script>
 
 <style>
-
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EMPLOYEESTABLE
+
+<template>
+  <div align="center" class="mb-10">
+    <v-card width="1000">
+      <v-card-title> Employees </v-card-title>
+      <v-card-text>
+        <v-data-table 
+          :headers="headers" 
+          :items="employees"
+        >
+           
+        </v-data-table>
+      </v-card-text>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      headers: [
+        {
+          text: "ID",
+          align: "start",
+          sortable: false,
+          value: "id",
+        },
+        {
+          text: "First Name",
+          sortable: false,
+          value: "fname",
+        },
+        {
+          text: "Last Name",
+          value: "lname",
+          sortable: false,
+        },
+        {
+          text: 'Email',
+          value: 'email',
+          sortable: false
+        },
+        {
+          text: 'Access Name',
+          value: 'access_name',
+          sortable: true
+        },
+        {
+          text: 'Actions',
+          value: 'actions'
+        }
+      ],
+      employees: [{
+        id: '',
+        fname: '',
+        lname: '',
+        email: '',
+        access_name: ''
+      }],
+    }
+  },
+  methods: {
+    getEmployees() {
+      axios.get('http://murder-manila/api/AdminList', {
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
+      })
+        .then(res => {
+          this.employees = res.data.data;
+        })
+    }
+  },
+  created() {
+    this.getEmployees();
+  }
+};
+</script>
+
+<style scoped>
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CALENDAR
+
+<template>
+  <div
+    align="center"
+  >
+    <v-card
+      width="1000"
+      class="mt-10 elevation-3"
+    >
+      <v-row>
+        <v-col>
+          <v-sheet height="400">
+            <v-calendar
+              ref="calendar"
+              :now="today"
+              :value="today"
+              :events="events"
+              color="primary"
+              type="day"
+            ></v-calendar>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import moment from 'moment'
+  export default {
+    data: () => ({
+      today: '',
+      events: [
+        {
+          start: '',
+          end: '',
+        }
+      ],
+      formattedTime: ''
+    }),
+    mounted () {
+      this.$refs.calendar.scrollToTime('08:00')    
+    },
+    methods: {
+      dateToday() {
+        this.today = new Date().toISOString().substr(0, 10)
+      },
+      getBookings() {
+        const dateToday = new Date().toISOString().substr(0, 10);
+        axios.post('http://murder-manila/api/dailyBookings', {
+          book_date: dateToday
+        })
+          .then(res => {
+            this.events = res.data.data
+            const startDate = res.data.data[0].start
+            const startTime = (res.data.data[0].time).substr(0, 5)
+            const finalTime = `${startDate} ${startTime}`
+            return this.formattedTime = finalTime;          
+          })
+      }
+    },
+    created() {
+      this.getBookings();
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template>
+  <div
+    align="center"
+  >
+    <v-card
+      width="1000"
+      class="mt-10 elevation-3"
+    >
+      <v-date-picker
+        v-model="today"
+        class="mt-4"
+        full-width
+        color="red"
+        no-title
+        readonly
+        :events="events"
+      ></v-date-picker>
+    </v-card>
+  </div>
+</template>
+
+
+<script>
+import axios from 'axios'
+import moment from 'moment'
+  export default {
+    data: () => ({
+      today: '',
+      events: [
+        {
+          start: '',
+          end: '',
+        }
+      ],
+      formattedTime: ''
+    }),
+    mounted () {
+     
+    },
+    methods: {
+      dateToday() {
+        this.today = new Date().toISOString().substr(0, 10)
+      },
+      getBookings() {
+        const dateToday = new Date().toISOString().substr(0, 10);
+        axios.post('http://murder-manila/api/dailyBookings', {
+          book_date: dateToday
+        })
+          .then(res => {
+            this.events = res.data.data     
+          })
+      }
+    },
+    created() {
+      this.getBookings();
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template>
+  <div
+    align="center"
+  >
+    <v-card
+      width="1000"
+      class="mt-10 elevation-3"
+    >
+      <v-row>
+        <v-col>
+          <v-sheet height="400">
+            <v-calendar
+              ref="calendar"
+              :now="today"
+              :value="today"
+              :events="events"
+              color="primary"
+              type="month"         
+            ></v-calendar>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import moment from 'moment'
+  export default {
+    data: () => ({
+      today: '',
+      events: [
+        {
+          start: '',
+          end: '',
+        }
+      ],
+      formattedTime: ''
+    }),
+    mounted () {
+      this.$refs.calendar.scrollToTime('08:00')    
+    },
+    methods: {
+      dateToday() {
+        this.today = new Date().toISOString().substr(0, 10)
+      },
+      getBookings() {
+        const dateToday = new Date().toISOString().substr(0, 10);
+        axios.post('http://murder-manila/api/dailyBookings', {
+          book_date: dateToday
+        })
+          .then(res => {
+            this.events = res.data.data
+            const startDate = res.data.data[0].start
+            const startTime = (res.data.data[0].time).substr(0, 5)
+            const finalTime = `${startDate} ${startTime}`
+            return this.formattedTime = finalTime;          
+          })
+      }
+    },
+    created() {
+      this.getBookings();
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CALENDAR
+
+<template>
+  <div align="center">
+    <v-card width="1000" class="mt-5 elevation-3">
+      <v-sheet height="64">
+        <v-toolbar flat>
+          <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
+            Today
+          </v-btn>
+          <v-btn fab text small color="grey darken-2" @click="prev">
+            <v-icon small> mdi-chevron-left </v-icon>
+          </v-btn>
+          <v-btn fab text small color="grey darken-2" @click="next">
+            <v-icon small> mdi-chevron-right </v-icon>
+          </v-btn>
+          <v-toolbar-title v-if="$refs.calendar">
+            {{ $refs.calendar.title }}
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-menu bottom right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
+                <span>{{ typeToLabel[type] }}</span>
+                <v-icon right> mdi-menu-down </v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="type = 'day'">
+                <v-list-item-title>Day</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="type = 'week'">
+                <v-list-item-title>Week</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="type = 'month'">
+                <v-list-item-title>Month</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="type = '4day'">
+                <v-list-item-title>4 days</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-toolbar>
+      </v-sheet>
+      
+      <v-sheet height="600">
+        <v-calendar
+          ref="calendar"
+          v-model="focus"
+          color="primary"
+          :events="events"
+          :type="type"
+          :now="today"
+          @click:event="showEvent"
+          @click:more="viewDay"
+          @click:date="viewDay"
+        ></v-calendar>
+        <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          offset-x
+        >
+          <v-card color="grey lighten-4" min-width="350px" flat>
+            <v-toolbar :color="selectedEvent.color" dark>
+              <v-btn icon>
+                <v-icon
+                >mdi-check</v-icon>
+              </v-btn>
+              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-card-text 
+              v-for="(event, index) in events" :key="index"
+              >
+              {{ `${index}:${event['reference_number']}` }}
+            </v-card-text>
+            <v-card-actions>
+              <v-btn text color="secondary" @click="selectedOpen = false">
+                Close
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+      </v-sheet>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      today: new Date().toISOString().substr(0, 10),
+      focus: new Date().toISOString().substr(0, 10),
+      type: "month",
+      typeToLabel: {
+        month: "Month",
+        week: "Week",
+        day: "Day",
+        "4day": "4 Days",
+      },
+      name: null,
+      details: null,
+      start: null,
+      end: null,
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+      currentLyEditing: null,
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      events: [
+        {
+
+        }
+      ],
+      dialog: false,
+      referenceNumber: ''
+    };
+  },
+  computed: {
+
+  },
+  mounted() {
+    this.getEvents();
+  },
+  methods: {
+    getEvents() {
+      const dateToday = new Date().toISOString().substr(0, 10);
+      axios.post("http://murder-manila/api/dailyBookings", {
+          book_date: dateToday,
+        })
+        .then((res) => {
+          this.events = res.data.data;
+          console.log(this.events)      
+        });
+    },
+    showEvent ({ nativeEvent, event }) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          setTimeout(() => {
+            this.selectedOpen = true
+          }, 10)
+        }
+
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          setTimeout(open, 10)
+        } else {
+          open()
+        }
+
+        nativeEvent.stopPropagation()
+    },
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
+    },
+    setToday() {
+      this.focus = this.today;
+    },
+    prev() {
+      this.$refs.calendar.prev();
+    },
+    next() {
+      this.$refs.calendar.next();
+    },
+  },
+};
+</script>

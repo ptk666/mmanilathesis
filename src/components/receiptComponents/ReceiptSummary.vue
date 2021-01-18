@@ -109,15 +109,15 @@ export default {
     }
   },
   created() {
-    // this.fname = this.$store.state.form.contactsDatas[0].firstName;
-    // this.lname = this.$store.state.form.contactsDatas[0].lastName;
-    // this.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
-    // this.email = this.$store.state.form.contactsDatas[0].emailAddress;
-    // this.time = this.$store.state.form.bookingDatas[0].time;
-    // this.date = this.$store.state.form.bookingDatas[0].date;
-    // this.theme = this.$store.state.form.bookingDatas[0].selectedTheme;
-    // this.maxpax = this.$store.state.form.bookingDatas[0].persons;
-    // this.venue = this.$store.state.form.bookingDatas[0].address; 
+    this.fname = this.$store.state.form.contactsDatas[0].fname;
+    this.lname = this.$store.state.form.contactsDatas[0].lname;
+    this.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
+    this.email = this.$store.state.form.contactsDatas[0].email;
+    this.time = this.$store.state.form.bookingDatas[0].time;
+    this.date = this.$store.state.form.bookingDatas[0].date;
+    this.theme = this.$store.state.form.bookingDatas[0].themes;
+    this.maxpax = this.$store.state.form.bookingDatas[0].maxpax;
+    this.venue = this.$store.state.form.bookingDatas[0].venue; 
 
     this.getThemesString();
     this.getBookings();
@@ -126,7 +126,7 @@ export default {
     getThemesString() {
       axios.get('http://murder-manila/api/themes')
       .then(res => {
-        if(this.$store.state.form.bookingDatas[0].selectedTheme == 1) {
+        if(this.$store.state.form.bookingDatas[0].themes == 1) {
           this.stringTheme = res.data.data[0].name;
         }
         else {
@@ -135,10 +135,7 @@ export default {
       })
     },
     getBookings() {
-      axios.get('http:murder-manila/api/reciept')
-      .then(res => {
-        console.log(res.data)
-      })
+
     }
   },
   computed: {

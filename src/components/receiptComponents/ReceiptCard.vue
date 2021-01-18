@@ -50,7 +50,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import { mapActions } from 'vuex'
 export default {
   data() {
@@ -62,32 +62,63 @@ export default {
   methods: {
     ...mapActions(['computation']),
     sendReceiptEmail() {
-      const datas = {};
-      datas.fname = this.$store.state.form.contactsDatas[0].firstName;
-      datas.lname = this.$store.state.form.contactsDatas[0].lastName;
-      datas.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
-      datas.theme = this.$store.state.form.bookingDatas[0].selectedTheme;
-      datas.date  = this.$store.state.form.bookingDatas[0].date;
-      datas.time  = this.$store.state.form.bookingDatas[0].time;
-      datas.maxpax  = this.$store.state.form.bookingDatas[0].persons;
-      datas.venue = this.$store.state.form.bookingDatas[0].address;
-      datas.downpayment = this.$store.state.form.receiptComputations.downpayment;
-      datas.amount  = this.$store.state.form.receiptComputations.totalAmountWithVAT;
-      datas.referenceNumber = '12345678910';
+      // const datas = {};
+      // datas.fname = this.$store.state.form.contactsDatas[0].firstName;
+      // datas.lname = this.$store.state.form.contactsDatas[0].lastName;
+      // datas.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
+      // datas.theme = this.$store.state.form.bookingDatas[0].selectedTheme;
+      // datas.date  = this.$store.state.form.bookingDatas[0].date;
+      // datas.time  = this.$store.state.form.bookingDatas[0].time;
+      // datas.maxpax  = this.$store.state.form.bookingDatas[0].persons;
+      // datas.venue = this.$store.state.form.bookingDatas[0].address;
+      // datas.downpayment = this.$store.state.form.receiptComputations.downpayment;
+      // datas.amount  = this.$store.state.form.receiptComputations.totalAmountWithVAT;
+      // datas.referenceNumber = '12345678910';
 
-      console.log(datas)
-      // axios.post('http://murder-manila/api/sendEmailBillling', datas)
-      // .then(res => {
-      //   console.log(res.data)
-      // })
+      // console.log(datas)
+      const sendEmail = {};
+      sendEmail.email = this.$store.state.form.contactsDatas[0].email;
+      sendEmail.fname = this.$store.state.form.contactsDatas[0].fname;
+      sendEmail.lname = this.$store.state.form.contactsDatas[0].lname;
       
+      sendEmail.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
+      //sendEmail.themes = this.$store.state.form.bookingDatas[0].themes.toString();
+      sendEmail.date = this.$store.state.form.bookingDatas[0].date;
+      sendEmail.time = this.$store.state.form.bookingDatas[0].time;
+      sendEmail.maxpax = this.$store.state.form.bookingDatas[0].maxpax;
+      sendEmail.venue = this.$store.state.form.bookingDatas[0].venue;
+      sendEmail.downpayment = this.$store.state.form.receiptComputations.downpayment;
+      sendEmail.referenceNumber = this.$store.state.form.contactsDatas[0].referenceNumber;
+      sendEmail.amount = this.$store.state.form.receiptComputations.totalAmountWithVAT;
+      
+      
+      // console.log(sendEmail)      
+      axios.post('http://murder-manila/api/sendEmailBillling', sendEmail)
+      //   fname: this.$store.state.form.contactsDatas[0].fname,
+      //   lname: this.$store.state.form.contactsDatas[0].lname,      
+      //   contactNumber: this.$store.state.form.contactsDatas[0].contactNumber,
+      //   themes: this.$store.state.form.bookingDatas[0].themes,
+      //   date: this.$store.state.form.bookingDatas[0].date,
+      //   time: this.$store.state.form.bookingDatas[0].time,
+      //   maxpax: this.$store.state.form.bookingDatas[0].maxpax,
+      //   venue: this.$store.state.form.bookingDatas[0].venue,
+      //   downpayment: this.$store.state.form.receiptComputations.downpayment,
+      //   amount: this.$store.state.form.receiptComputations.totalAmountWithVAT,
+      //   email: this.$store.tate.form.contactsDatas[0].email,        
+      // })        
+      .then(res => {
+        console.log(res)
+      })      
     }
   },
   created() {
     this.computation();
     this.downpayment = (this.$store.state.form.receiptComputations.downpayment).toLocaleString();
     this.total = (this.$store.state.form.receiptComputations.totalAmountWithVAT).toLocaleString();
+    console.log(this.$store.state.form.contactsDatas[0].email)
   },
+  mounted() {
+  }
 }
 </script>
 

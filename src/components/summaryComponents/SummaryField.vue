@@ -43,7 +43,7 @@
                   class="mt-3"
                   v-bind="attrs"
                   v-on="on"
-                  @click.once="btnSnackbar.show = true; sendVerificationCode()"
+                  @click.once="btnSnackbar.show = true; sendVerificationCode(); getVerificationCode()"
                 >
                   Send verification code
                 </v-btn>
@@ -104,17 +104,17 @@
           <v-text-field
             label="Theme"
             readonly
-            v-model="bookingData.theme"
+            v-model="bookingData.themes"
           ></v-text-field>
           <v-text-field
             label="# of Players"
             readonly
-            v-model="bookingData.persons"
+            v-model="bookingData.maxpax"
           ></v-text-field>
           <v-text-field
             label="Venue"
             readonly
-            v-model="bookingData.address"
+            v-model="bookingData.venue"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -145,9 +145,9 @@ export default {
       bookingData: {
         time: '',
         date: '',
-        theme: '',
-        persons: '',
-        address: ''
+        themes: '',
+        maxpax: '',
+        venue: ''
       }
     }
   },
@@ -158,17 +158,18 @@ export default {
     )]
   },
   created() {
-    this.contactsData.fname = this.$store.state.form.contactsDatas[0].firstName;
-    this.contactsData.lname = this.$store.state.form.contactsDatas[0].lastName;
+    this.contactsData.fname = this.$store.state.form.contactsDatas[0].fname;
+    this.contactsData.lname = this.$store.state.form.contactsDatas[0].lname;
     this.contactsData.contactNumber = this.$store.state.form.contactsDatas[0].contactNumber;
-    this.contactsData.email = this.$store.state.form.contactsDatas[0].emailAddress;
+    this.contactsData.email = this.$store.state.form.contactsDatas[0].email;
     this.bookingData.time = this.$store.state.form.bookingDatas[0].time;
     this.bookingData.date = this.$store.state.form.bookingDatas[0].date;
-    this.bookingData.theme = this.$store.state.form.bookingDatas[0].selectedTheme;
-    this.bookingData.persons = this.$store.state.form.bookingDatas[0].persons;
-    this.bookingData.address = this.$store.state.form.bookingDatas[0].address;
+    this.bookingData.themes = this.$store.state.form.bookingDatas[0].themes;
+    this.bookingData.maxpax = this.$store.state.form.bookingDatas[0].maxpax;
+    this.bookingData.venue = this.$store.state.form.bookingDatas[0].venue;
 
     this.getThemesString();
+    // this.generateRef();
   },
   updated() {
    
@@ -224,13 +225,14 @@ export default {
       const summaryData = {};
       summaryData.book_date = this.bookingData.date;
       summaryData.book_time = this.bookingData.time;
-      summaryData.theme_id  = this.$store.state.form.bookingDatas[0].selectedTheme;
-      summaryData.maxpax    = this.bookingData.persons;
-      summaryData.venue     = this.bookingData.address;
+      summaryData.theme_id  = this.$store.state.form.bookingDatas[0].themes;
+      summaryData.maxpax    = this.bookingData.maxpax;
+      summaryData.venue     = this.bookingData.venue;
       summaryData.fname     = this.contactsData.fname;
       summaryData.lname     = this.contactsData.lname;
       summaryData.mobile_number = Number(this.contactsData.contactNumber);
       summaryData.email     = this.contactsData.email;
+      summaryData.reference_number = this.$store.state.form.contactsDatas[0].referenceNumber;
       
       axios.post('http://murder-manila/api/booking', summaryData)
       .then(res => {
@@ -240,15 +242,26 @@ export default {
     getThemesString() {
       axios.get('http://murder-manila/api/themes')
       .then(res => {
-        if(this.bookingData.theme == 1) {
-          this.bookingData.theme = res.data.data[0].name;
+        if(this.bookingData.themes == 1) {
+          this.bookingData.themes = res.data.data[0].name;
         }
         else {
-          this.bookingData.theme = res.data.data[1].name;
+          this.bookingData.themes = res.data.data[1].name;
         }
       })
+    },
+    // getVerificationCode() {
+    //   axios.get('http://murder-manila/api/sendVerification') 
+    //     .then(res => {
+    //       console.log(res.data)
+    //     })
+    // }
+      generateRef() {
+      console.log(new Date())
+
     }
-  }
+  },
+
 
 }
 </script>
