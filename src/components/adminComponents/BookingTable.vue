@@ -4,7 +4,7 @@
   >
     <v-card
       full-width
-      class="mt-10 elevation-3"
+      class="mt-1 elevation-3"
     >
       <v-data-table
         :headers="headers"
@@ -38,7 +38,7 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
-                        <!-- <v-text-field
+                        <v-text-field
                           v-model="editedItem.id"
                           label="ID"
                           readonly
@@ -51,6 +51,13 @@
                           label="Reference Number"
                           readonly
                           
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.Name"
+                          label="Name"
+                          readonly                          
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
@@ -86,20 +93,26 @@
                           v-model="editedItem.venue"
                           label="Venue"
                           readonly
-                        ></v-text-field> -->
-                        <v-btn
+                        ></v-text-field>                                             
+                      </v-col>         
+                      <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                      >
+                        <!-- <v-btn
                           medium
                           color="secondary"
-                        >Partially Paid</v-btn>                        
-                      </v-col>         
+                        >Partially Paid</v-btn>      -->
+                      </v-col>
                       <v-col
                         cols="12" sm="6" md="4"
                         class="ml-5"
-                      >
-                        <v-btn
+                      >                      
+                        <!-- <v-btn
                           medium
                           color="primary"
-                        >Fully Paid</v-btn>
+                        >Fully Paid</v-btn> -->
                       </v-col>       
                     </v-row>
                   </v-container>
@@ -107,6 +120,17 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
+                  <v-btn
+                    medium
+                    color="primary"
+                    @click="fullyPaid(); fullyPaidEmail()"
+                  >Fully Paid</v-btn>
+                  <v-btn
+                          medium
+                          color="secondary"
+                          @click="partialPaid(); partialPaidEmail()"
+                        >Partially Paid</v-btn>  
+                        <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="close">
                     Cancel
                   </v-btn>
@@ -124,7 +148,7 @@
                   <v-btn color="blue darken-1" text @click="closeDelete"
                     >Cancel</v-btn
                   >
-                  <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  <v-btn color="blue darken-1" text @click="deleteItemConfirm(); cancelBookingEmail();"
                     >OK</v-btn
                   >
                   <v-spacer></v-spacer>
@@ -177,8 +201,18 @@ import axios from 'axios'
           sortable: false
         },
         {
+          text: 'Name',
+          value: 'Name',
+          sortable: false
+        },
+        {
           text: 'Book Date',
           value: 'date',
+          sortable: true
+        },
+        {
+          text: 'Expiry Date',
+          value: 'expiration_date',
           sortable: true
         },
         {
@@ -202,16 +236,6 @@ import axios from 'axios'
           sortable: false
         },
         {
-          text: 'Fully Paid',
-          value: 'fully_paid',
-          sortable: false
-        },
-        {
-          text: 'Partially Paid',
-          value:'partially_paid',
-          sortable: false
-        },
-        {
           text: 'Status',
           value: 'status',
           sortable: false
@@ -229,7 +253,11 @@ import axios from 'axios'
         time: '',
         game: '',
         maxpax: '',
-        venue: ''
+        venue: '',
+        Name: '',
+        email: '',
+        Total_Amount: '',
+        expiration_date: ''
       }],
       editedIndex: -1,
       editedItem: {
@@ -239,7 +267,11 @@ import axios from 'axios'
         time: '',
         game: '',
         maxpax: '',
-        venue: ''
+        venue: '',
+        Name: '',
+        email: '',
+        Total_Amount: '',
+        expiration_date: ''
       },
       defaultItem: {
         id: '',
@@ -248,14 +280,20 @@ import axios from 'axios'
         time: '',
         game: '',
         maxpax: '',
-        venue: ''
+        venue: '',
+        Name: '',
+        email: '',
+        Total_Amount: '',
+        expiration_date: ''
       },
+      interval: ''
     }),
 
     computed: {
       formTitle () {
         return this.editedIndex === -1 ?  '' : ''
       },
+      
     },
 
     watch: {
@@ -269,6 +307,7 @@ import axios from 'axios'
 
     created () {
       this.initialize();
+      this.expiredBookings();
       axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem('token');
     },
 
@@ -279,7 +318,6 @@ import axios from 'axios'
         })
           .then(res => {
             this.datas = res.data.data;
-            console.log(res.data.data)
             
           })
       },
@@ -303,6 +341,9 @@ import axios from 'axios'
         this.closeDelete()
 
         axios.put(`http://murder-manila/api/editCancelBooking/${this.editedItem.id}`)
+          .then(res => {
+            this.$forceUpdate();
+          })
       },
 
       close () {
@@ -334,12 +375,87 @@ import axios from 'axios'
             .then(res => {
               console.log(res.data);
             })
-
+          this.dialog = false
+          this.$forceUpdate();
         } else {
           this.datas.push(this.editedItem)
         }
-        this.close()
+        this.datas.splice(this.editedIndex, 1)
       },
+      partialPaidEmail() {
+        axios.post(`http://murder-manila/api/initialPaymentEmail`, {
+          email: this.editedItem.email,
+          referenceNumber: this.editedItem.Reference_Number,
+          name: this.editedItem.Name,
+          downpayment: this.editedItem.Downpayment,
+          date: this.editedItem.date,
+          time: this.editedItem.time,
+          theme: this.editedItem.game,
+          maxpax: this.editedItem.maxpax,
+          venue: this.editedItem.venue,
+          contactNumber: this.e
+        })
+          .then(res => {
+            console.log(res)
+          })
+      },
+      partialPaid() {
+        axios.put(`http://murder-manila/api/editPartialPaid/${this.editedItem.id}`)
+      },
+      fullyPaid() {
+        axios.put(`http://murder-manila/api/editFullyPaid/${this.editedItem.id}`)
+      },
+      fullyPaidEmail() {
+        axios.post(`http://murder-manila/api/fullPaymentEmail`, {
+          email: this.editedItem.email,
+          referenceNumber: this.editedItem.Reference_Number,
+          name: this.editedItem.Name,
+          total_amount: this.editedItem.Total_Amount,
+          date: this.editedItem.date,
+          time: this.editedItem.time,
+          theme: this.editedItem.game,
+          maxpax: this.editedItem.maxpax,
+          venue: this.editedItem.venue
+        })
+          .then(res => {
+            console.log(res.data)
+          })
+      },
+      cancelBookingEmail() {
+        axios.post(`http://murder-manila/api/cancelBookingEmail`, {
+          email: this.editedItem.email,
+          referenceNumber: this.editedItem.Reference_Number,
+          name: this.editedItem.Name,
+          amount: this.editedItem.Total_Amount,
+          date: this.editedItem.date,
+          time: this.editedItem.time,
+          theme: this.editedItem.game,
+          maxpax: this.editedItem.maxpax,
+          venue: this.editedItem.venue
+        })
+          .then(res => {
+            console.log(res.data)
+          })
+      },
+      expiredBookings() {
+          axios.put(`http://murder-manila/api/expiredEmail`)
+          .then(res => {
+            // console.log(res)
+          })          
+      },
+      intervalCall() {
+        axios.put('http://murder-manila/api/doneEmail')
+          .then(res => {
+            
+          })
+      }
     },
+    mounted() {
+      this.interval = setInterval(() => {
+        this.intervalCall();
+        this.expiredBookings();
+      }, 300000)
+    }
+    
   }
 </script>

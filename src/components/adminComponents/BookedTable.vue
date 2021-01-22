@@ -34,6 +34,7 @@ export default {
           value: 'Reference_Number',
           sortable: false
         },
+        
         {
           text: 'Book Date',
           value: 'date',
@@ -67,7 +68,8 @@ export default {
         time: '',
         game: '',
         maxpax: '',
-        venue: ''
+        venue: '',
+        name : ''
       }]
     }
   },

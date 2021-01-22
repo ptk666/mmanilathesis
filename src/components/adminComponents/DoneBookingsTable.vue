@@ -6,7 +6,7 @@
       width="1000"
     >
       <v-card-title>
-        <em>Expired Bookings</em>
+        <em>Done Bookings</em>
       </v-card-title>
       <v-data-table
         :headers="headers"
@@ -31,9 +31,10 @@ export default {
         },
         {
           text: 'Reference Number',
-          value: 'reference_number',
+          value: 'Reference_Number',
           sortable: false
         },
+        
         {
           text: 'Book Date',
           value: 'date',
@@ -46,7 +47,7 @@ export default {
         },
         {
           text: 'Theme',
-          value: 'theme',
+          value: 'game',
           sortable: false
         },
         {
@@ -65,9 +66,10 @@ export default {
         reference_number: '',
         date: '',
         time: '',
-        theme: '',
+        game: '',
         maxpax: '',
-        venue: ''
+        venue: '',
+        name : ''
       }]
     }
   },
@@ -76,10 +78,9 @@ export default {
       this.getBookings();
     },
     getBookings() {
-      axios.get('http://murder-manila/api/expiredBookings')
+      axios.get(`http://murder-manila/api/doneBookings`)
         .then(res => {
           this.datas = res.data.data;
-          // console.log(res.data)
         })
     }
   },

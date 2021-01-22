@@ -39,13 +39,19 @@
           color="success"
           dark
           medium
-          @click="sendReceiptEmail()"
+          @click.once="sendReceiptEmail()"
         >
           Send receipt in email
         </v-btn>
       </v-card-actions>
 
     </v-card>
+    <div
+      align="center"
+      class="mt-5"
+    > 
+      <a href="/">Back to Home</a>
+    </div>
   </div>
 </template>
 

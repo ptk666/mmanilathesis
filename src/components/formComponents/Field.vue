@@ -210,13 +210,7 @@ export default {
         title:'Successful!'
       })      
     },
-    generateRef() {
-      const date = new Date()
-      const refDate = (date.toISOString().substr(0, 10).replaceAll('-', ''))
-      const refTime = (date.toISOString().substr(11, 8).replaceAll(':', ''))
-      const referenceNumber = refDate.concat(refTime)
-      this.referenceNumber = referenceNumber
-    }
+    
   },
   computed: {
     ...mapGetters(['showThemes', 'showSnackbars']),
