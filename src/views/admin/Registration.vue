@@ -89,7 +89,7 @@ export default {
     },
     methods: {
       register() {
-        axios.post('http://murder-manila/api/adminRegister', {
+        axios.post('http://35.225.91.92/api/adminRegister', {
           fname: this.registration.firstName,
           lname: this.registration.lastName,
           username: this.registration.username,
@@ -108,7 +108,7 @@ export default {
           })
       },
       getPositions() {
-        axios.get('http://murder-manila/api/positions', {
+        axios.get('http://35.225.91.92/api/positions', {
           headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
         })
         .then(res => {
