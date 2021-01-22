@@ -58,6 +58,7 @@
 <script>
 import axios from 'axios'
 import { mapActions } from 'vuex'
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {
@@ -113,7 +114,16 @@ export default {
       //   email: this.$store.tate.form.contactsDatas[0].email,        
       // })        
       .then(res => {
-        console.log(res)
+        Swal.fire({
+          toast: true,
+          position: 'top-left',
+          showConfirmButton: false,
+          timer: 10000,
+          timerProgressBar: true,
+          icon: 'success',
+          title: 'We have sent you a receipt details in your email.'
+        })
+        console.log(res.data)
       })      
     }
   },

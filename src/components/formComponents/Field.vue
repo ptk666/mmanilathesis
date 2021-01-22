@@ -154,7 +154,7 @@ export default {
     bookData() {
       this.$v.$touch();
 
-      if(this.bookingData.time.length > 0 && this.bookingData.date.length > 0 && this.bookingData.themes != null && this.bookingData.maxpax.length > 0 && this.bookingData.venue.length > 0) {
+      if(this.bookingData.time.length > 0 && this.bookingData.date.length > 0 && this.bookingData.themes != null && this.bookingData.maxpax >= 8 &&  this.bookingData.maxpax <= 60 && this.bookingData.venue.length > 0) {
         axios.post('http://35.225.91.92/api/Availability', {
           book_date: this.bookingData.date,
           book_time: this.bookingData.time
@@ -252,8 +252,7 @@ export default {
   }, 
   created() {
     this.fetchThemes();
-    this.checkDate();
-    this.generateRef();
+    this.checkDate();    
     
     
    

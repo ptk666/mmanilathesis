@@ -136,7 +136,8 @@ export default {
       faqs: [
         {question: 'How to book?', answer: 'Choose your mystery > Finalize the date, time, venue, and headcount of participants > Email info@murdermanila.com'},
         {question: 'How much is Murder Manila?', answer: 'Price starts at PHP 10,000 for 8 people then additional PHP 500/head for every person in excess.'},
-        {question: 'What are the inclusions?', answer: 'The package includes the following: A mystery that can be played for 2 hours, complete with individual roles, objectives, and other pertinent guidelines for each player such as costume and background story per character.'}
+        {question: 'What are the inclusions?', answer: 'The package includes the following: A mystery that can be played for 2 hours, complete with individual roles, objectives, and other pertinent guidelines for each player such as costume and background story per character.'},
+        {question: 'Can I refund my bookings?', answer: 'stricly NO REFUNDS upon cancellation.'}
       ],
       srcs: [
         {src: 'murder.jpg'},

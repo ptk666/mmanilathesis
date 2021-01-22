@@ -87,7 +87,7 @@ export default {
     },
   methods: {
     submit() {
-        if(this.contactsData.fname.length > 0 && this.contactsData.lname.length > 0 && this.contactsData.contactNumber.length <= 11 && this.contactsData.email.length > 0) {
+        if(this.contactsData.fname.length > 0 && this.contactsData.lname.length > 0 && this.contactsData.contactNumber.length == 11 && this.contactsData.email.length > 0) {
           this.$store.dispatch('storeContactsData', this.contactsData)
           this.$router.push('/form/contacts/summary');
           this.sweetAlert();

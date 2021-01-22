@@ -60,6 +60,11 @@ export default {
           value: 'venue',
           sortable: false
         },
+        {
+          text: 'Paid',
+          value: 'paid',
+          sortable: false
+        },
       ],
       datas: [{
         id: '',

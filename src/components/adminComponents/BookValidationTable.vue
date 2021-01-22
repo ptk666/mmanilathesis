@@ -58,7 +58,7 @@ export default {
           text: 'Venue',
           value: 'venue',
           sortable: false
-        },
+        },       
       ],
       datas: [{
         id: '',
