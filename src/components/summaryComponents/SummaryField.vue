@@ -250,12 +250,12 @@ export default {
         }
       })
     },
-    getVerificationCode() {
-      axios.get('http://35.225.91.92/api/sendVerification') 
-        .then(res => {
-          console.log(res.data)
-        })
-    },
+    // getVerificationCode() {
+    //   axios.get('http://35.225.91.92/api/sendVerification') 
+    //     .then(res => {
+    //       console.log(res.data)
+    //     })
+    // },
       generateRef() {
       console.log(new Date())
 
