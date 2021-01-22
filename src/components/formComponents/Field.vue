@@ -51,6 +51,7 @@
           full-width
           v-model="bookingData.date"
           no-title   
+          :min="this.allowance"
         >
         </v-date-picker>
       </v-menu>
