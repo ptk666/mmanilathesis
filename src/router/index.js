@@ -65,6 +65,19 @@ const router = new VueRouter({
       path: '/eventManager',
       name: 'eventManager',
       component: EventManager,
+      beforeEnter(to, from, next) {
+        if(currentUser == 2) {
+          if(hasToken) {
+            next();
+          }
+          else {
+            next(false)
+          }
+        }
+        else {
+          next(false)
+        }
+      }
     },
     {
       path: '/owner',
