@@ -140,42 +140,42 @@ export default {
   },
   methods: {
     initialize() {
-      axios.get('http://murder-manila/api/Pendings')
+      axios.get('http://35.225.91.92/api/Pendings')
         .then(res => {
           this.count.reservationCount = res.data.data.length;          
         })
 
-      axios.get('http://murder-manila/api/CancelledBookings')
+      axios.get('http://35.225.91.92/api/CancelledBookings')
         .then(res => {
           this.count.cancelledReservationCount = res.data.data.length;
         })
 
-      axios.get('http://murder-manila/api/expiredBookings')
+      axios.get('http://35.225.91.92/api/expiredBookings')
         .then(res => {
           this.count.expiredReservationCount = res.data.data.length;
         })
 
-      axios.get('http://murder-manila/api/Booked')
+      axios.get('http://35.225.91.92/api/Booked')
         .then(res => {
           this.count.confirmedReservationCount = res.data.data.length;
         })
     },
     reservation() {
-      axios.get('http://murder-manila/api/Pendings')
+      axios.get('http://35.225.91.92/api/Pendings')
         .then(res => {
           this.count.reservationCount = res.data.data.length;  
           this.$forceUpdate();        
         })
     },
     cancelledReservation() {
-      axios.get('http://murder-manila/api/CancelledBookings')
+      axios.get('http://35.225.91.92/api/CancelledBookings')
         .then(res => {
           this.count.cancelledReservationCount = res.data.data.length;
           this.$forceUpdate();
         })
     },
     confirmedReservation() {
-      axios.get('http://murder-manila/api/Booked')
+      axios.get('http://35.225.91.92/api/Booked')
         .then(res => {
           this.count.confirmedReservationCount = res.data.data.length;
           this.$forceUpdate();

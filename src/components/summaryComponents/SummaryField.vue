@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     sendVerificationCode() {
-      axios.post('http://murder-manila/api/generateCode')
+      axios.post('http://35.225.91.92/api/generateCode')
       .then(res => {
         console.log(res.data.response);
         Swal.fire({
@@ -193,7 +193,7 @@ export default {
     verifyVerificationCode() {
       const payloadverification = {};
       payloadverification.verificationCode = this.verificationNumber;
-      axios.post('http://murder-manila/api/codes', payloadverification)
+      axios.post('http://35.225.91.92/api/codes', payloadverification)
       .then(res => {
         if(res.data.response) {
           Swal.fire({
@@ -234,13 +234,13 @@ export default {
       summaryData.email     = this.contactsData.email;
       summaryData.reference_number = this.$store.state.form.contactsDatas[0].referenceNumber;
       
-      axios.post('http://murder-manila/api/booking', summaryData)
+      axios.post('http://35.225.91.92/api/booking', summaryData)
       .then(res => {
         console.log(res.data.response);
       })
     },
     getThemesString() {
-      axios.get('http://murder-manila/api/themes')
+      axios.get('http://35.225.91.92/api/themes')
       .then(res => {
         if(this.bookingData.themes == 1) {
           this.bookingData.themes = res.data.data[0].name;
@@ -250,12 +250,12 @@ export default {
         }
       })
     },
-    // getVerificationCode() {
-    //   axios.get('http://murder-manila/api/sendVerification') 
-    //     .then(res => {
-    //       console.log(res.data)
-    //     })
-    // }
+    getVerificationCode() {
+      axios.get('http://35.225.91.92/api/sendVerification') 
+        .then(res => {
+          console.log(res.data)
+        })
+    },
       generateRef() {
       console.log(new Date())
 

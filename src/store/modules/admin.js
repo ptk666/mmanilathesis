@@ -11,7 +11,7 @@ const getters = {
 
 const actions = {
   loginUser({ commit }, users) {
-    axios.post('http://murder-manila/api/logIn', {
+    axios.post('http://35.225.91.92/api/logIn', {
       username: users.username,
       password: users.password
     })

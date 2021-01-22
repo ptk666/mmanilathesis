@@ -313,7 +313,7 @@ import axios from 'axios'
 
     methods: {
       initialize () {
-        axios.get('http://murder-manila/api/Pendings', {
+        axios.get('http://35.225.91.92/api/Pendings', {
           
         })
           .then(res => {
@@ -340,7 +340,7 @@ import axios from 'axios'
         this.datas.splice(this.editedIndex, 1)
         this.closeDelete()
 
-        axios.put(`http://murder-manila/api/editCancelBooking/${this.editedItem.id}`)
+        axios.put(`http://35.225.91.92/api/editCancelBooking/${this.editedItem.id}`)
           .then(res => {
             this.$forceUpdate();
           })
@@ -365,7 +365,7 @@ import axios from 'axios'
       save () {
         if (this.editedIndex > -1) {
           
-          axios.put(`http://murder-manila/api/editpending/${this.editedItem.id}`, {
+          axios.put(`http://35.225.91.92/api/editpending/${this.editedItem.id}`, {
             date: this.editedItem.date,
             time: this.editedItem.time,
             game: this.editedItem.game,
@@ -383,7 +383,7 @@ import axios from 'axios'
         this.datas.splice(this.editedIndex, 1)
       },
       partialPaidEmail() {
-        axios.post(`http://murder-manila/api/initialPaymentEmail`, {
+        axios.post(`http://35.225.91.92/api/initialPaymentEmail`, {
           email: this.editedItem.email,
           referenceNumber: this.editedItem.Reference_Number,
           name: this.editedItem.Name,
@@ -400,13 +400,13 @@ import axios from 'axios'
           })
       },
       partialPaid() {
-        axios.put(`http://murder-manila/api/editPartialPaid/${this.editedItem.id}`)
+        axios.put(`http://35.225.91.9235.225.91.92/api/editPartialPaid/${this.editedItem.id}`)
       },
       fullyPaid() {
-        axios.put(`http://murder-manila/api/editFullyPaid/${this.editedItem.id}`)
+        axios.put(`http://35.225.91.9235.225.91.92/api/editFullyPaid/${this.editedItem.id}`)
       },
       fullyPaidEmail() {
-        axios.post(`http://murder-manila/api/fullPaymentEmail`, {
+        axios.post(`http://35.225.91.9235.225.91.92/api/fullPaymentEmail`, {
           email: this.editedItem.email,
           referenceNumber: this.editedItem.Reference_Number,
           name: this.editedItem.Name,
@@ -422,7 +422,7 @@ import axios from 'axios'
           })
       },
       cancelBookingEmail() {
-        axios.post(`http://murder-manila/api/cancelBookingEmail`, {
+        axios.post(`http://35.225.91.92/api/cancelBookingEmail`, {
           email: this.editedItem.email,
           referenceNumber: this.editedItem.Reference_Number,
           name: this.editedItem.Name,
@@ -438,13 +438,13 @@ import axios from 'axios'
           })
       },
       expiredBookings() {
-          axios.put(`http://murder-manila/api/expiredEmail`)
+          axios.put(`http://35.225.91.92/api/expiredEmail`)
           .then(res => {
             // console.log(res)
           })          
       },
       intervalCall() {
-        axios.put('http://murder-manila/api/doneEmail')
+        axios.put('http://35.225.91.92/api/doneEmail')
           .then(res => {
             
           })

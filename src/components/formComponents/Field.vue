@@ -155,7 +155,7 @@ export default {
       this.$v.$touch();
 
       if(this.bookingData.time.length > 0 && this.bookingData.date.length > 0 && this.bookingData.themes != null && this.bookingData.maxpax.length > 0 && this.bookingData.venue.length > 0) {
-        axios.post('http://murder-manila/api/Availability', {
+        axios.post('http://35.225.91.92/api/Availability', {
           book_date: this.bookingData.date,
           book_time: this.bookingData.time
         })

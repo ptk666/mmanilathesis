@@ -34,7 +34,7 @@ const getters = {
 const actions = {
   // eslint-disable-next-line no-unused-vars
   async fetchThemes({ commit }) {
-    const response = await axios.get('http://murder-manila/api/themes')
+    const response = await axios.get('http://35.225.91.92/api/themes')
       commit('setThemes', response.data.data)   
   },
   async storeData({ commit }, sendData) {
@@ -44,11 +44,11 @@ const actions = {
     commit('addContactsData', contactsData)
   },
   async getVerificationCode({ commit }) {
-    const response = await axios.get('http://murder-manila/api/sendVerification/')
+    const response = await axios.get('http://35.225.91.92/api/sendVerification/')
       commit(response)
   },
   async getVerifyCode({ commit }) {
-    const response = await axios.get('http://murder-manila/api/booking')
+    const response = await axios.get('http://35.225.91.92/api/booking')
       commit(response)
   },
   async computation({ commit }) {

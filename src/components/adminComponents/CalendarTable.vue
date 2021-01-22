@@ -223,7 +223,7 @@ import moment from 'moment'
         // const max = new Date(`${end.date}T23:59:59`)
         // const days = (max.getTime() - min.getTime()) / 86400000
         // const eventCount = this.rnd(days, days + 20)     
-        axios.post('http://murder-manila/api/dailyBookings', {
+        axios.post('http://35.225.91.92/api/dailyBookings', {
           book_date: today
         })
           .then(res => {

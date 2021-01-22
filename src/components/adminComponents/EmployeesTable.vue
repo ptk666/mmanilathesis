@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getEmployees() {
-      axios.get('http://murder-manila/api/AdminList', {
+      axios.get('http://35.225.91.92/api/AdminList', {
         headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}
       })
         .then(res => {

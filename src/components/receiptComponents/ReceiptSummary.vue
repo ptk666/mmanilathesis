@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     getThemesString() {
-      axios.get('http://murder-manila/api/themes')
+      axios.get('http://35.225.91.92/api/themes')
       .then(res => {
         if(this.$store.state.form.bookingDatas[0].themes == 1) {
           this.stringTheme = res.data.data[0].name;

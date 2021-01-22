@@ -99,7 +99,7 @@ export default {
       
       
       // console.log(sendEmail)      
-      axios.post('http://murder-manila/api/sendEmailBillling', sendEmail)
+      axios.post('http://35.225.91.92/api/sendEmailBillling', sendEmail)
       //   fname: this.$store.state.form.contactsDatas[0].fname,
       //   lname: this.$store.state.form.contactsDatas[0].lname,      
       //   contactNumber: this.$store.state.form.contactsDatas[0].contactNumber,

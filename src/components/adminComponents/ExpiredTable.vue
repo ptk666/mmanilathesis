@@ -76,7 +76,7 @@ export default {
       this.getBookings();
     },
     getBookings() {
-      axios.get('http://murder-manila/api/expiredBookings')
+      axios.get('http://35.225.91.92/api/expiredBookings')
         .then(res => {
           this.datas = res.data.data;
           // console.log(res.data)
