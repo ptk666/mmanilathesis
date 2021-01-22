@@ -57,7 +57,8 @@ const actions = {
   },
   logoutUser() {
     localStorage.removeItem('token');
-
+    localStorage.removeItem('user_info');
+    localStorage.removeItem('user_type');
     window.location.replace('/login');
   },
 };

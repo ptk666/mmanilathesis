@@ -12,8 +12,17 @@
         :headers="headers"
         :items="datas"
         class="mt-5 elevation-3"
-      ></v-data-table>
-    </v-card>
+      >
+      <!-- eslint-disable -->
+       <template    
+       
+          #item.paid="{ item }"
+        >
+          {{ datas.is_initial_paid }}
+         
+        </template>
+      </v-data-table>
+    </v-card>   
   </div>
 </template>
 
@@ -62,7 +71,7 @@ export default {
         },
         {
           text: 'Paid',
-          value: 'paid',
+          value: 'is_initial_paid',
           sortable: false
         },
       ],
@@ -74,7 +83,8 @@ export default {
         game: '',
         maxpax: '',
         venue: '',
-        name : ''
+        name : '',
+        is_initial_paid: ''
       }]
     }
   },
@@ -83,16 +93,21 @@ export default {
       this.getBookings();
     },
     getBookings() {
-      axios.get('http://35.225.91.92/api/Booked')
-        .then(res => {
-          this.datas = res.data.data;
-        })
-    }
+    axios.get('http://35.225.91.92/api/Booked')
+      .then(res => {
+        this.datas = res.data.data;        
+      })        
+    },
+    
+  },
+  computed: {
+
   },
   created() {
     axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem('token');
     this.getBookings();
-  }
+    this.getPaidString();
+  },
 }
 </script>
 
