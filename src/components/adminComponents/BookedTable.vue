@@ -105,8 +105,7 @@ export default {
   },
   created() {
     axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem('token');
-    this.getBookings();
-    this.getPaidString();
+    this.getBookings();    
   },
 }
 </script>
