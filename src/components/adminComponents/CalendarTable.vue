@@ -218,13 +218,13 @@ import moment from 'moment'
         // const max = new Date(`${end.date}T23:59:59`)
         // const days = (max.getTime() - min.getTime()) / 86400000
         // const eventCount = this.rnd(days, days + 20)     
-        axios.post('http://murder-manila/api/dailyBookings', {
+        axios.post('http://35.225.91.92/api/dailyBookings', {
           book_date: today
         })
           .then(res => {
             let events = []
             let dataEvents = Object.values(res.data.data) 
-            console.log(dataEvents[0])        
+            console.log(dataEvents)        
             events.push(
               {
                 name: dataEvents[0].name,
@@ -259,17 +259,17 @@ import moment from 'moment'
                 mobile_number: dataEvents[2].mobile_number,
                 email: dataEvents[2].email
               },
-              {
-                name: dataEvents[3].name,
-                start: dataEvents[3].start,
-                end: dataEvents[3].end,
-                color: '#25282D',
-                referenceNumber: dataEvents[3].reference_number,
-                theme: dataEvents[3].theme,
-                maxpax: dataEvents[3].maxpax,
-                mobile_number: dataEvents[3].mobile_number,
-                email: dataEvents[3].email
-              },
+              // {
+              //   name: dataEvents[3].name,
+              //   start: dataEvents[3].start,
+              //   end: dataEvents[3].end,
+              //   color: '#25282D',
+              //   referenceNumber: dataEvents[3].reference_number,
+              //   theme: dataEvents[3].theme,
+              //   maxpax: dataEvents[3].maxpax,
+              //   mobile_number: dataEvents[3].mobile_number,
+              //   email: dataEvents[3].email
+              // },
             )
             this.events = events
           })

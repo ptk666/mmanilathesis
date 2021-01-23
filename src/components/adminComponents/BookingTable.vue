@@ -400,13 +400,13 @@ import axios from 'axios'
           })
       },
       partialPaid() {
-        axios.put(`http://35.225.91.9235.225.91.92/api/editPartialPaid/${this.editedItem.id}`)
+        axios.put(`http://35.225.91.92/api/editPartialPaid/${this.editedItem.id}`)
       },
       fullyPaid() {
-        axios.put(`http://35.225.91.9235.225.91.92/api/editFullyPaid/${this.editedItem.id}`)
+        axios.put(`http://35.225.91.92/api/editFullyPaid/${this.editedItem.id}`)
       },
       fullyPaidEmail() {
-        axios.post(`http://35.225.91.9235.225.91.92/api/fullPaymentEmail`, {
+        axios.post(`http://35.225.91.92/api/fullPaymentEmail`, {
           email: this.editedItem.email,
           referenceNumber: this.editedItem.Reference_Number,
           name: this.editedItem.Name,
